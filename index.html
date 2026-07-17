@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenBlink AI | NanoBlink 6M</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+        }
+        .glow-border:hover {
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+            border-color: rgba(34, 211, 238, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen overflow-x-hidden selection:bg-cyan-500 selection:text-slate-950">
+
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+    <header class="relative border-b border-slate-900 bg-slate-950/70 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="OpenBlink Logo" class="h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">OpenBlink <span class="text-cyan-400 font-medium text-sm code-font tracking-normal">.ai</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
+                <a href="#model" class="hover:text-cyan-400 transition">O modelu</a>
+                <a href="#specs" class="hover:text-cyan-400 transition">Specifikace</a>
+                <a href="#status" class="hover:text-cyan-400 transition">Stav vývoje</a>
+            </nav>
+            <div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 code-font">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse mr-2"></span> v0.1-dev
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-sm font-semibold text-slate-300 mb-6 animate-bounce">
+            🚀 Nová éra českých LLM
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+            Představujeme <br class="hidden sm:inline">
+            <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent glow-text">
+                NanoBlink 6M
+            </span>
+        </h1>
+        
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-12 font-light">
+            Extrémně rychlý, ultra-efektivní český jazykový model navržený speciálně pro RAG a lokální deployment na běžném hardwaru.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
+            <a href="#status" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold hover:opacity-90 transition shadow-lg shadow-cyan-500/20 w-full sm:w-auto">
+                Sledovat vývoj
+            </a>
+            <a href="#specs" class="px-8 py-4 rounded-xl bg-slate-900 border border-slate-800 font-semibold text-slate-300 hover:bg-slate-850 transition w-full sm:w-auto code-font">
+                查看_specs.json
+            </a>
+        </div>
+
+        <section id="model" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-24 scroll-mt-20">
+            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl font-bold mb-4">🇨🇿</div>
+                <h3 class="text-xl font-bold mb-2">Nativní čeština</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Trénováno na optimalizovaném českém slovníku <b>Seznam Electra</b>. Žarádné neznámé <code class="code-font text-cyan-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[UNK]</code> tokeny. Perfektní gramatika a kontext.
+                </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 text-xl font-bold mb-4">🧠</div>
+                <h3 class="text-xl font-bold mb-2">RAG Architecture</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Model má do embeddingů nativně implementované speciální tagy <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[CONTEXT]</code>, <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[QUESTION]</code> a <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[ANSWER]</code> pro přesné dohledávání informací.
+                </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold mb-4">⚡</div>
+                <h3 class="text-xl font-bold mb-2">Ultra-Lightweight</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    S pouhými <b>6 miliony parametrů</b> je model bleskově rychlý. Ideální pro edge zařízení, chytré domácnosti nebo jako mikro-agent běžící na pozadí tvého PC.
+                </p>
+            </div>
+        </section>
+
+        <section id="specs" class="mb-24 text-left scroll-mt-20">
+            <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+                <span class="text-cyan-400 code-font">&lt;</span> Technické specifikace <span class="text-cyan-400 code-font">/&gt;</span>
+            </h2>
+            <div class="bg-slate-900/60 border border-slate-900 rounded-2xl overflow-hidden backdrop-blur-sm">
+                <div class="bg-slate-950 px-6 py-3 border-b border-slate-900 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 code-font">nanoblink-6m-config.json</span>
+                </div>
+                <div class="p-6 code-font text-sm md:text-base space-y-3 bg-slate-900/20">
+                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Počet parametrů:</span> <span class="text-emerald-400 font-bold">6 000 000</span></div>
+                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Základní architektura:</span> <span class="text-cyan-400">BERT / Custom Transformer</span></div>
+                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Tokenizer:</span> <span class="text-purple-400">Seznam/small-e-czech (Modified)</span></div>
+                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Trénovací dataset:</span> <span class="text-amber-400">SQuAD-cs (53 MB čistých tokenů)</span></div>
+                    <div class="flex"><span class="text-slate-500 w-48">Cílové formáty:</span> <span class="text-blue-400">HuggingFace (SafeTensors) &rarr; GGUF (FP16 / Q4_K_M)</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="status" class="mb-16 text-left scroll-mt-20">
+            <h2 class="text-3xl font-bold mb-8">Aktuální stav projektu</h2>
+            <div class="space-y-6 max-w-3xl">
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500/10 border-2 border-emerald-500 flex items-center justify-center text-emerald-400 text-xs font-bold">✓</div>
+                        <div class="w-0.5 h-full bg-emerald-500/30 my-2"></div>
+                    </div>
+                    <div class="pt-0.5">
+                        <h4 class="font-bold text-emerald-400">Příprava datasetu & Tokenizace</h4>
+                        <p class="text-sm text-slate-400">SQuAD-cs dataset úspěšně rozbalen ze zanořené struktury Parquet. Zkonvertováno do 53MB souboru s 0 neznámými znaky.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-500/10 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-xs font-bold animate-pulse">2</div>
+                        <div class="w-0.5 h-full bg-slate-800 my-2"></div>
+                    </div>
+                    <div class="pt-0.5">
+                        <h4 class="font-bold text-cyan-400">Pre-training & Fine-Tuning</h4>
+                        <p class="text-sm text-slate-400">Inicializace 6M modelu, úprava embedding vrstvy na <code class="code-font text-xs bg-slate-900 px-1 rounded">len(tokenizer)</code> pro integraci RAG speciálních tokenů.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-slate-900 border-2 border-slate-800 flex items-center justify-center text-slate-500 text-xs font-bold">3</div>
+                    </div>
+                    <div class="pt-0.5">
+                        <h4 class="font-bold text-slate-500">GGUF Export & Kvantizace</h4>
+                        <p class="text-sm text-slate-500">Konverze přes nový <code class="code-font text-xs">convert_hf_to_gguf.py</code> skript do formátu FP16 a následná 4-bitová kvantizace na Q4_K_M pro lokální provoz v LM Studiu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-900 bg-slate-950 py-8 text-center text-sm text-slate-600 code-font">
+        <p>&copy; 2026 OpenBlink AI. Built for the local LLM revolution.</p>
+    </footer>
+
+</body>
+</html>
