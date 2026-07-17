@@ -50,4 +50,4 @@ Modely Blink jsou optimalizovány pro pipeline:
 
 ## 🛡️ Licence & Open-Source
 
-Všechny modely a zdrojové kódy v rámci OpenBlink AI jsou vydány pod svobodnou licencí **MIT** (nebo Apache 2.0 - doplň podle sebe). Jsou plně self-hostable, bezplatné a bezpečné pro offline použití.
+Všechny modely a zdrojové kódy v rámci OpenBlink AI jsou vydány pod svobodnou licencí **Apache 2.0**. Jsou plně self-hostable, bezplatné a bezpečné pro offline použití.
