@@ -1,166 +1,332 @@
 <!DOCTYPE html>
-<html lang="cs" class="scroll-smooth">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenBlink AI | NanoBlink 6M</title>
-    
-    <link rel="icon" type="image/png" href="logo.png">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>OpenBlink AI — MicroBlink 3M</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        /* --- CSS Reset & Global Typography --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
         
+        @page {
+            size: A4;
+            margin: 0; /* Full bleed layout control managed internally */
+        }
+
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #030014;
+            color: #f3f4f6;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
-        .code-font {
-            font-family: 'JetBrains Mono', monospace;
+
+        /* --- Color Palette & Visual Elements --- */
+        :root {
+            --bg-dark: #030014;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #00f2fe;
+            --accent-purple: #9b51e0;
+            --text-muted: #9ca3af;
         }
-        .glow-text {
-            text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+
+        /* --- Layout Structures --- */
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
         }
-        .glow-border:hover {
-            box-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
-            border-color: rgba(34, 211, 238, 0.4);
+
+        header {
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .header-cell-left {
+            text-align: left;
+            vertical-align: middle;
+        }
+        
+        .header-cell-right {
+            text-align: right;
+            vertical-align: middle;
+        }
+
+        .logo {
+            font-size: 18pt;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .lang-toggle {
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 20px 0;
+        }
+
+        .hero h1 {
+            font-size: 28pt;
+            font-weight: 800;
+            line-height: 1.2;
+            margin: 0 0 16px 0;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 12pt;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px auto;
+        }
+
+        .btn-table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 10pt;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #030014;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.25);
+            margin-right: 12px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid var(--card-border);
+        }
+
+        /* --- Grid & Features (Tables for WeasyPrint layout stability) --- */
+        .section-title {
+            font-size: 14pt;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin: 0 0 24px 0;
+            color: #ffffff;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 12px;
+            page-break-after: avoid;
+        }
+
+        .features-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 16px;
+            margin: 0 -16px 40px -16px;
+            page-break-inside: avoid;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        .feature-card h3 {
+            font-size: 11pt;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: var(--accent-cyan);
+        }
+
+        .feature-card p {
+            font-size: 9.5pt;
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* --- Terminal Block --- */
+        .terminal-container {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+
+        .terminal {
+            background: #07041a;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9.5pt;
+            color: #a7b3c2;
+            line-height: 1.5;
+        }
+
+        .terminal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            color: var(--text-muted);
+            font-size: 8.5pt;
+        }
+
+        .terminal .comment { color: #5c6370; font-style: italic; }
+        .terminal .prompt { color: var(--accent-cyan); font-weight: bold; }
+        .terminal .keyword { color: var(--accent-purple); }
+        .terminal .string { color: #98c379; }
+
+        /* --- Content Sections --- */
+        .about-section {
+            background: linear-gradient(180deg, rgba(155, 81, 224, 0.03), transparent);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 60px;
+        }
+
+        .about-section p {
+            font-size: 10pt;
+            color: #d1d5db;
+            margin: 0 0 16px 0;
+            line-height: 1.6;
+        }
+        
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 8.5pt;
+            color: var(--text-muted);
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen overflow-x-hidden selection:bg-cyan-500 selection:text-slate-950">
+<body>
 
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+    <div class="page-container">
+        <!-- Header -->
+        <header>
+            <table class="header-table">
+                <tr>
+                    <td class="header-cell-left">
+                        <div class="logo">OpenBlink AI</div>
+                    </td>
+                    <td class="header-cell-right">
+                        <span class="lang-toggle">CZ / EN</span>
+                    </td>
+                </tr>
+            </table>
+        </header>
 
-    <header class="relative border-b border-slate-900 bg-slate-950/70 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="OpenBlink Logo" class="h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(34,211,238,0.2)]">
-                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">OpenBlink <span class="text-cyan-400 font-medium text-sm code-font tracking-normal">.ai</span></span>
-            </div>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
-                <a href="#model" class="hover:text-cyan-400 transition">O modelu</a>
-                <a href="#specs" class="hover:text-cyan-400 transition">Specifikace</a>
-                <a href="#status" class="hover:text-cyan-400 transition">Stav vývoje</a>
-            </nav>
-            <div>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 code-font">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse mr-2"></span> v0.1-dev
-                </span>
-            </div>
-        </div>
-    </header>
-
-    <main class="relative max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-sm font-semibold text-slate-300 mb-6 animate-bounce">
-            🚀 Nová éra českých LLM
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            Představujeme <br class="hidden sm:inline">
-            <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent glow-text">
-                NanoBlink 6M
-            </span>
-        </h1>
-        
-        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-12 font-light">
-            Extrémně rychlý, ultra-efektivní český jazykový model navržený speciálně pro RAG a lokální deployment na běžném hardwaru.
-        </p>
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
-            <a href="#status" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold hover:opacity-90 transition shadow-lg shadow-cyan-500/20 w-full sm:w-auto">
-                Sledovat vývoj
-            </a>
-            <a href="#specs" class="px-8 py-4 rounded-xl bg-slate-900 border border-slate-800 font-semibold text-slate-300 hover:bg-slate-850 transition w-full sm:w-auto code-font">
-                查看_specs.json
-            </a>
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Lokální výkon. Globální dopad.</h1>
+            <p>
+                Zažijte technologický průlom v kompaktních jazykových modelech. MicroBlink 3M přináší pokročilou inteligenci optimalizovanou přímo pro běžný lokální hardware.
+            </p>
+            <table class="btn-table">
+                <tr>
+                    <td><a href="#" class="btn btn-primary">Začít / Get Started</a></td>
+                    <td><a href="#" class="btn btn-secondary">Dokumentace</a></td>
+                </tr>
+            </table>
         </div>
 
-        <section id="model" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-24 scroll-mt-20">
-            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
-                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl font-bold mb-4">🇨🇿</div>
-                <h3 class="text-xl font-bold mb-2">Nativní čeština</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Trénováno na optimalizovaném českém slovníku <b>Seznam Electra</b>. Žarádné neznámé <code class="code-font text-cyan-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[UNK]</code> tokeny. Perfektní gramatika a kontext.
-                </p>
-            </div>
-            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
-                <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 text-xl font-bold mb-4">🧠</div>
-                <h3 class="text-xl font-bold mb-2">RAG Architecture</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    Model má do embeddingů nativně implementované speciální tagy <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[CONTEXT]</code>, <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[QUESTION]</code> a <code class="code-font text-teal-400 bg-slate-950 px-1 py-0.5 rounded text-xs">[ANSWER]</code> pro přesné dohledávání informací.
-                </p>
-            </div>
-            <div class="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 backdrop-blur-sm glow-border transition duration-300">
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold mb-4">⚡</div>
-                <h3 class="text-xl font-bold mb-2">Ultra-Lightweight</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
-                    S pouhými <b>6 miliony parametrů</b> je model bleskově rychlý. Ideální pro edge zařízení, chytré domácnosti nebo jako mikro-agent běžící na pozadí tvého PC.
-                </p>
-            </div>
-        </section>
+        <!-- Features Grid -->
+        <h2 class="section-title">Architektura MicroBlink 3M</h2>
+        <table class="features-table">
+            <tr>
+                <td class="feature-card">
+                    <h3>3 Miliony Parametrů</h3>
+                    <p>Mikroskopická velikost umožňující okamžitou odezvu a plný provoz v paměti VRAM běžných přenosných počítačů bez ztráty přesnosti.</p>
+                </td>
+                <td class="feature-card">
+                    <h3>0% UNK Tokenizer</h3>
+                    <p>Unikátní, bezpečně uzamčená česká abeceda a BPE slovník zaručující nulový výskyt neznámých tokenů [UNK] při zpracování diakritiky.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="feature-card">
+                    <h3>Grouped-Query Attention</h3>
+                    <p>Implementace GQA (známé z velkých modelů Llama 3) drasticky snižuje paměťové nároky KV cache a zrychluje generování textu na CPU.</p>
+                </td>
+                <td class="feature-card">
+                    <h3>Integrovaný RAG Web-Search</h3>
+                    <p>Architektura je od základu navržena pro spolupráci s internetovým kontextem a přesné extrahování faktů bez halucinací.</p>
+                </td>
+            </tr>
+        </table>
 
-        <section id="specs" class="mb-24 text-left scroll-mt-20">
-            <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
-                <span class="text-cyan-400 code-font">&lt;</span> Technické specifikace <span class="text-cyan-400 code-font">/&gt;</span>
-            </h2>
-            <div class="bg-slate-900/60 border border-slate-900 rounded-2xl overflow-hidden backdrop-blur-sm">
-                <div class="bg-slate-950 px-6 py-3 border-b border-slate-900 flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                    </div>
-                    <span class="text-xs font-medium text-slate-500 code-font">nanoblink-6m-config.json</span>
-                </div>
-                <div class="p-6 code-font text-sm md:text-base space-y-3 bg-slate-900/20">
-                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Počet parametrů:</span> <span class="text-emerald-400 font-bold">6 000 000</span></div>
-                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Základní architektura:</span> <span class="text-cyan-400">BERT / Custom Transformer</span></div>
-                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Tokenizer:</span> <span class="text-purple-400">Seznam/small-e-czech (Modified)</span></div>
-                    <div class="flex border-b border-slate-900/60 pb-2"><span class="text-slate-500 w-48">Trénovací dataset:</span> <span class="text-amber-400">SQuAD-cs (53 MB čistých tokenů)</span></div>
-                    <div class="flex"><span class="text-slate-500 w-48">Cílové formáty:</span> <span class="text-blue-400">HuggingFace (SafeTensors) &rarr; GGUF (FP16 / Q4_K_M)</span></div>
-                </div>
+        <!-- Terminal Preview -->
+        <div class="terminal-container">
+            <h2 class="section-title">Ukázka inicializace</h2>
+            <div class="terminal">
+                <div class="terminal-header">// Inicializace modelu MicroBlink 3M v Pythonu</div>
+                <span class="comment"># 1. Instalace open-source knihovny</span><br>
+                <span class="prompt">$</span> pip install openblink-ai<br><br>
+                <span class="comment"># 2. Načtení architektury s GQA a tokenizéru</span><br>
+                <span class="keyword">import</span> openblink<br>
+                model = openblink.load(<span class="string">"microblink-3m"</span>)<br><br>
+                <span class="comment"># 3. Spuštění lokální inference s internetovým RAG</span><br>
+                <span class="prompt">$</span> python run_model.py --initialize --rag_enabled<br>
+                <span class="comment">&gt;&gt;&gt; [OK] Váhy microblink_3m_base.pt úspěšně načteny.</span>
             </div>
-        </section>
+        </div>
 
-        <section id="status" class="mb-16 text-left scroll-mt-20">
-            <h2 class="text-3xl font-bold mb-8">Aktuální stav projektu</h2>
-            <div class="space-y-6 max-w-3xl">
-                <div class="flex gap-4">
-                    <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 rounded-full bg-emerald-500/10 border-2 border-emerald-500 flex items-center justify-center text-emerald-400 text-xs font-bold">✓</div>
-                        <div class="w-0.5 h-full bg-emerald-500/30 my-2"></div>
-                    </div>
-                    <div class="pt-0.5">
-                        <h4 class="font-bold text-emerald-400">Příprava datasetu & Tokenizace</h4>
-                        <p class="text-sm text-slate-400">SQuAD-cs dataset úspěšně rozbalen ze zanořené struktury Parquet. Zkonvertováno do 53MB souboru s 0 neznámými znaky.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 rounded-full bg-cyan-500/10 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-xs font-bold animate-pulse">2</div>
-                        <div class="w-0.5 h-full bg-slate-800 my-2"></div>
-                    </div>
-                    <div class="pt-0.5">
-                        <h4 class="font-bold text-cyan-400">Pre-training & Fine-Tuning</h4>
-                        <p class="text-sm text-slate-400">Inicializace 6M modelu, úprava embedding vrstvy na <code class="code-font text-xs bg-slate-900 px-1 rounded">len(tokenizer)</code> pro integraci RAG speciálních tokenů.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 rounded-full bg-slate-900 border-2 border-slate-800 flex items-center justify-center text-slate-500 text-xs font-bold">3</div>
-                    </div>
-                    <div class="pt-0.5">
-                        <h4 class="font-bold text-slate-500">GGUF Export & Kvantizace</h4>
-                        <p class="text-sm text-slate-500">Konverze přes nový <code class="code-font text-xs">convert_hf_to_gguf.py</code> skript do formátu FP16 a následná 4-bitová kvantizace na Q4_K_M pro lokální provoz v LM Studiu.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- About Lab -->
+        <h2 class="section-title">O laboratoři OpenBlink AI</h2>
+        <div class="about-section">
+            <p>
+                Jsme specializovaná výzkumná laboratoř zaměřená na budoucnost lokalizované umělé inteligence. Naším cílem je vyvíjet extrémně malé, hyper-fokusované a vysoce optimalizované jazykové modely, které nepotřebují obří korporátní datacentra.
+            </p>
+            <p>
+                Věříme v naprostou demokratizaci AI, zachování stoprocentního soukromí dat, snížení provozních nákladů na nulu a zpřístupnění špičkových technologií pro vývojáře i koncové uživatele kdekoli na světě.
+            </p>
+        </div>
 
-    </main>
-
-    <footer class="border-t border-slate-900 bg-slate-950 py-8 text-center text-sm text-slate-600 code-font">
-        <p>&copy; 2026 OpenBlink AI. Built for the local LLM revolution.</p>
-    </footer>
+        <!-- Footer -->
+        <footer>
+            &copy; 2026 OpenBlink AI Lab. Všechna práva vyhrazena. | Společně tvoříme efektivní inteligenci.
+        </footer>
+    </div>
 
 </body>
 </html>
