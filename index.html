@@ -1,303 +1,386 @@
 <!DOCTYPE html>
-<html lang="cs" class="scroll-smooth">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>OpenBlink AI — Výzkum otevřených českých modelů (AGI Transition)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenBlink AI — Inteligentní budoucnost</title>
     <style>
-        body { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
-        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.03em; }
-        .grid-bg { background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px); bg-size: 20px 20px; }
-        .grid-bg-dark { background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); bg-size: 20px 20px; }
+        /* Reset a globální nastavení */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #f5f5f7;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fixní moderní navigace */
+        header {
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #a1a1a6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Hero sekce (Úvodní obrazovka) */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 8% 60px 8%;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 750px;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        .hero-p {
+            font-size: 1.35rem;
+            color: #a1a1a6;
+            margin-bottom: 40px;
+            max-width: 650px;
+        }
+
+        /* Tlačítka */
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #e5e5e5;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary svg {
+            margin-left: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(4px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Informační grid (Obsahová část) */
+        .info-section {
+            padding: 80px 8%;
+            background-color: #000000;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 8px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: #a1a1a6;
+            font-size: 0.98rem;
+        }
+
+        /* Detailní textový blok */
+        .detailed-info {
+            padding: 80px 8%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .detailed-info h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .detailed-info p {
+            color: #a1a1a6;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        /* Patička */
+        footer {
+            padding: 50px 8%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #000000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666666;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #666666;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #a1a1a6;
+        }
+
+        /* Rychlé responzivní úpravy pro mobilní zařízení */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none; /* Schová klasické menu pro zachování čistoty displeje */
+            }
+
+            .hero {
+                padding: 120px 20px 60px 20px;
+                min-height: auto;
+            }
+
+            h1 {
+                font-size: 2.6rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-p {
+                font-size: 1.1rem;
+            }
+
+            .info-section {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                text-align: left;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .detailed-info {
+                padding: 60px 20px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 40px 20px;
+            }
+        }
     </style>
 </head>
-<body class="bg-[#fcfcfc] text-[#000000] antialiased selection:bg-black selection:text-white">
+<body>
 
-    <header class="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 backdrop-blur-md">
-        <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 md:px-12">
-            <a class="flex items-center gap-2.5 font-bold text-sm tracking-wider uppercase mono" href="#">
-                <img src="logo.png" alt="OpenBlink AI Logo" class="h-5 w-5 object-contain">
-                <span>OpenBlink AI</span>
-            </a>
-            <nav class="hidden lg:flex items-center gap-10 text-xs font-medium uppercase tracking-wider text-zinc-500">
-                <a class="hover:text-black transition-colors" href="#mission">Mise</a>
-                <a class="hover:text-black transition-colors" href="#public">Pro veřejnost</a>
-                <a class="hover:text-black transition-colors" href="#developer">Vývojářská dokumentace</a>
-                <a class="hover:text-black transition-colors" href="#specs">Specifikace</a>
-                <a class="hover:text-black transition-colors" href="#about">O nás</a>
-                <a class="hover:text-black transition-colors" href="#roadmap">Roadmapa</a>
-            </nav>
-            <a class="inline-flex h-9 items-center justify-center border border-black bg-black px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-transparent hover:text-black transition-all rounded-none mono" href="https://openblink.vercel.app/chat" target="_blank">
-                Otevřít Chat ↗
-            </a>
-        </div>
+    <header>
+        <a href="#" class="logo-container">
+            <img src="https://openblink.vercel.app/logo.png" alt="OpenBlink AI Logo" class="logo-img">
+            <span class="logo-text">OpenBlink AI</span>
+        </a>
+        <nav class="nav-links">
+            <a href="#vyzkum">Výzkum</a>
+            <a href="#modely">Modely</a>
+            <a href="#bezpecnost">Bezpečnost</a>
+            <a href="#spolecnost">Společnost</a>
+        </nav>
     </header>
 
-    <section id="mission" class="border-b border-zinc-200 bg-white py-16 sm:py-24 md:py-36">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-4 sm:mb-6 mono">// CORE MISSION STATEMENT // STATUS: ACTIVE</p>
-            <h1 class="text-4xl font-light tracking-tighter sm:text-6xl md:text-7xl lg:text-9xl max-w-6xl leading-[1.05] mb-8 sm:mb-12">
-                Efektivní AGI. <br>Plně open-weights. <br>Běžící lokálně.
-            </h1>
-            <div class="grid gap-6 md:grid-cols-2 mt-8 sm:mt-16 border-t border-zinc-200 pt-8 sm:pt-12">
-                <p class="text-lg sm:text-xl md:text-2xl font-light text-zinc-600 leading-relaxed">
-                    Zatímco globální giganti budují centralizované modely za miliardy dolarů skryté za neprůhlednými API, OpenBlink AI laboratoř jde cestou radikální decentralizace. Trénujeme modely, které rozumí českému kontextu zevnitř.
-                </p>
-                <p class="text-xs sm:text-sm text-zinc-500 leading-relaxed md:self-end">
-                    Naším cílem je překonat závislost na cloudové infrastruktuře. Architektura MicroBlink dokazuje, že pokročilá matematická komprese (SwiGLU, GQA) spojená s inteligentním streamováním dat dokáže doručit vysokou logickou kapacitu na spotřebním hardwaru.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="public" class="border-b border-zinc-200 py-16 sm:py-24 bg-white">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-            <h2 class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-10 sm:mb-16 mono">// VERSTVA 01: SPOLEČENSKÝ DOPAD A DEMOKRATIZACE</h2>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">Představujeme MicroBlink v1</div>
+            <h1>Posouváme hranice možností umělé inteligence.</h1>
+            <p class="hero-p">Vyvíjíme vysoce optimalizované, bezpečné a bleskurychlé jazykové modely, které mění způsob každodenní práce s daty a informacemi.</p>
             
-            <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-                <div class="space-y-3">
-                    <h3 class="text-lg sm:text-xl font-medium tracking-tight">Suverenita mateřského jazyka</h3>
-                    <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-                        Globální LLM vnímají češtinu jako statistický šum na okraji anglického internetu. To způsobuje brutální neefektivitu: česká slova se dělí na příliš velké množství drobných tokenů, což zpomaluje výpočet a trojnásobně zvyšuje náklady na provoz. Náš 12 000 slovník tokenů je od základu navržen tak, aby české texty zpracovával nativně a s maximální kompresní efektivitou.
-                    </p>
-                </div>
-                <div class="space-y-3">
-                    <h3 class="text-lg sm:text-xl font-medium tracking-tight">Konec cloudového monopolu</h3>
-                    <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-                        Posílat firemní data, citlivé osobní zápisky nebo kódy na servery třetích stran v zahraničí představuje bezpečnostní riziko. OpenBlink AI vrací kontrolu uživatelům. Naše open-weights modely znamenají, že celý kód i matematické váhy vlastníte vy. Jakmile si model stáhnete, máte k dispozici inteligentní systém, který nelze na dálku vypnout, cenzurovat ani monitorovat.
-                    </p>
-                </div>
-                <div class="space-y-3 md:col-span-2 lg:col-span-1">
-                    <h3 class="text-lg sm:text-xl font-medium tracking-tight">Matematika místo hrubé síly</h3>
-                    <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-                        Nemáme miliony dolarů na pronájem tisíců H100 serverů – a ani je nechceme. Místo toho investujeme čas do optimalizace neuronových vrstev. Použitím bránových mechanismů SwiGLU a moderního pozičního embeddingu RoPE dosahujeme toho, že náš 3M model dokáže provádět složité textové operace, na které dříve byly potřeba modely stokrát větší.
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-12 sm:mt-20 border border-zinc-200 p-4 sm:p-8 bg-[#fafafa] relative overflow-hidden min-h-[320px] sm:min-h-[280px] flex flex-col justify-between">
-                <div class="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:30px_30px]"></div>
-                <div class="flex justify-between items-start z-10 mb-4">
-                    <span class="text-[9px] sm:text-[10px] mono text-zinc-400 uppercase tracking-widest">NCS_VISUAL_01 // DATA_STREAM_PIPELINE</span>
-                    <span class="text-[9px] sm:text-[10px] mono text-black bg-white px-2 py-0.5 border border-zinc-200">LIVE GRAPH</span>
-                </div>
-                
-                <div class="w-full overflow-x-auto overflow-y-hidden z-10 py-4 custom-scrollbar">
-                    <div class="min-w-[640px] h-24">
-                        <svg class="w-full h-full" viewBox="0 0 800 100">
-                            <path d="M 50 50 L 250 50 M 250 50 L 450 20 M 250 50 L 450 80 M 450 20 L 650 50 M 450 80 L 650 50 M 650 50 L 750 50" stroke="#d4d4d8" stroke-width="2" stroke-dasharray="4 4" fill="none" />
-                            <circle cx="50" cy="50" r="5" fill="#000" />
-                            <circle cx="250" cy="50" r="5" fill="#000" />
-                            <circle cx="450" cy="20" r="4" fill="#a1a1aa" />
-                            <circle cx="450" cy="80" r="4" fill="#a1a1aa" />
-                            <circle cx="650" cy="50" r="5" fill="#000" />
-                            <circle cx="750" cy="50" r="5" fill="#000" />
-                            <circle cx="250" cy="50" r="8" stroke="#000" stroke-width="1" fill="none" class="animate-ping" style="animation-duration: 3s;" />
-                            <text x="50" y="35" class="text-[9px] mono fill-zinc-400" text-anchor="middle">USER_PROMPT</text>
-                            <text x="250" y="35" class="text-[9px] mono fill-black font-bold" text-anchor="middle">DUCKDUCKGO_API (STREAM)</text>
-                            <text x="450" y="10" class="text-[9px] mono fill-zinc-500" text-anchor="middle">RAM_CACHE_01</text>
-                            <text x="450" y="95" class="text-[9px] mono fill-zinc-500" text-anchor="middle">VRAM_INJECTION</text>
-                            <text x="650" y="35" class="text-[9px] mono fill-black font-bold" text-anchor="middle">MICROBLINK_3M_ENGINE</text>
-                            <text x="750" y="35" class="text-[9px] mono fill-zinc-400" text-anchor="middle">OUTPUT_TOKENS</text>
-                        </svg>
-                    </div>
-                </div>
-                
-                <p class="text-[10px] sm:text-[11px] text-zinc-500 max-w-2xl leading-relaxed z-10 mono mt-4">
-                    Obr 1: Architektura streamování dat eliminuje ukládání na disk. Data z vyhledávací sítě tečou přímo do VRAM jako dočasný kontext. Výsledkem je nulová disková režie. *Na mobilu lze graf posouvat do stran.*
-                </p>
+            <div class="cta-group">
+                <a href="https://openblink.vercel.app/chat" class="btn-primary">
+                    Přejít do chatu
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="#vyzkum" class="btn-secondary">Číst dokumentaci</a>
             </div>
         </div>
     </section>
 
-    <section id="developer" class="bg-[#0b0b0b] text-white py-16 sm:py-28 border-b border-zinc-900 relative">
-        <div class="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:15px_15px]"></div>
+    <section class="info-section" id="modely">
+        <h2 class="section-title">Naše technologická architektura</h2>
         
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12 relative z-10">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4 sm:mb-6 mono">// VRSTVA 02: ENGINEERING NOTES & DEEP RESEARCH // INTERNAL ONLY</p>
-            <h2 class="text-3xl font-light tracking-tight sm:text-5xl md:text-6xl mb-12 sm:mb-20 max-w-5xl leading-tight">
-                Překonání rozměrových anomálií a optimalizace gradientů v reálném čase.
-            </h2>
-
-            <div class="grid gap-12 lg:grid-cols-12">
-                <div class="lg:col-span-7 space-y-6 text-zinc-400 text-xs sm:text-sm leading-relaxed font-light">
-                    <h3 class="text-lg sm:text-xl font-normal text-white tracking-tight">1. Analýza chyb linearizace a fix tensorů</h3>
-                    <p>
-                        Během inicializační fáze pre-trainingu na binárním korpusu <code class="mono text-white bg-zinc-900 px-1 py-0.5 border border-zinc-800 break-all">ceska_data.bin</code> (26 MB, ~13M tokenů) docházelo při přechodu z Attention bloku do dopředné sítě k degradaci vah. Původní matice generovaly nesoulad dimenzí, což vedlo k okamžitému kolapsu gradientů.
-                    </p>
-                    <p>
-                        Problém byl identifikován v nesprávné projekci mezivrstev bránového mechanismu. Namísto klasické FFN sítě jsme implementovali upravený **SwiGLU (Swish Gated Linear Unit)** blok, který rozděluje výpočet do tří nezávislých lineárních vrstev.
-                    </p>
-                    <div class="bg-zinc-900 border border-zinc-800 p-3 sm:p-4 font-mono text-[11px] sm:text-xs text-zinc-300 my-4 overflow-x-auto whitespace-pre sm:whitespace-normal"># PyTorch SwiGLU Implementation
-w1_out = layer['ffn']['w1'](x_norm)
-w2_out = layer['ffn']['w2'](x_norm)
-swiglu = F.silu(w1_out) * w2_out
-x = x + layer['ffn']['w3'](swiglu)</div>
-                    <p>
-                        Klíčovým průlomem bylo přesné stanovení vnitřního skrytého rozměru (hidden dimension) na hodnotu **682**. Toto specifické číslo optimálně doplňuje dimenzi modelu <code class="mono text-white">d_model = 256</code> rozprostřenou mezi 8 hlav při zapojení GQA.
-                    </p>
-                </div>
-
-                <div id="specs" class="lg:col-span-5 lg:pl-8">
-                    <h3 class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4 sm:mb-6 mono">// ARCHITECTURE_MANIFEST.TXT</h3>
-                    <div class="border-t border-zinc-800 text-[11px] sm:text-xs mono">
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">PARAMETRY</span>
-                            <span class="text-white font-bold text-right">3,000,000 (3M)</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">DIMENZE (d_model)</span>
-                            <span class="text-white text-right">256</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-300 shrink-0">FFN VRSTVA (hidden_dim)</span>
-                            <span class="text-zinc-300 text-right">682</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">POČET VRSTEV</span>
-                            <span class="text-white text-right">6</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">ATTENTION HEADS</span>
-                            <span class="text-white text-right">8 / 2 (GQA)</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">SLOVNÍK (vocab)</span>
-                            <span class="text-white text-right">12,000 tokenů</span>
-                        </div>
-                        <div class="flex justify-between py-3 border-b border-zinc-800 gap-2">
-                            <span class="text-zinc-500 shrink-0">TARGET LOSS</span>
-                            <span class="text-green-400 text-right">3.80 - 4.10</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 border border-zinc-800 p-4 sm:p-6 bg-zinc-950 relative overflow-hidden h-56 flex flex-col justify-between">
-                        <div class="absolute inset-0 opacity-[0.03] bg-grid-bg-dark"></div>
-                        <span class="text-[9px] mono text-zinc-600 uppercase tracking-widest block mb-2">NCS_VISUAL_02 // MATRIX_WEIGHT_HEATMAP</span>
-                        
-                        <div class="w-full flex justify-center items-center h-24">
-                            <svg class="w-full h-full max-w-[280px]" viewBox="0 0 300 100">
-                                <g opacity="0.8">
-                                    <rect x="10" y="10" width="40" height="80" fill="none" stroke="#27272a" stroke-width="1"/>
-                                    <rect x="90" y="10" width="80" height="80" fill="none" stroke="#27272a" stroke-width="1"/>
-                                    <rect x="230" y="10" width="60" height="80" fill="none" stroke="#27272a" stroke-width="1"/>
-                                    <circle cx="20" cy="30" r="2" fill="#fff" />
-                                    <circle cx="35" cy="60" r="2" fill="#fff" />
-                                    <circle cx="150" cy="70" r="2" fill="#fff" class="animate-pulse" />
-                                    <circle cx="250" cy="20" r="2" fill="#fff" />
-                                    <line x1="50" y1="30" x2="90" y2="25" stroke="#27272a" stroke-width="0.5"/>
-                                    <line x1="50" y1="60" x2="90" y2="70" stroke="#27272a" stroke-width="0.5"/>
-                                    <line x1="170" y1="25" x2="230" y2="20" stroke="#27272a" stroke-width="0.5"/>
-                                </g>
-                                <text x="30" y="96" class="text-[8px] mono fill-zinc-500" text-anchor="middle">d_model</text>
-                                <text x="130" y="96" class="text-[8px] mono fill-zinc-500" text-anchor="middle">SwiGLU</text>
-                                <text x="260" y="96" class="text-[8px] mono fill-zinc-500" text-anchor="middle">Output</text>
-                            </svg>
-                        </div>
-                        <p class="text-[9px] sm:text-[10px] text-zinc-500 leading-normal mono mt-2">
-                            Obr 2: Schéma lineárních transformací uvnitř sítě MicroBlink.
-                        </p>
-                    </div>
-                </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Model MicroBlink</h3>
+                <p>Náš vlajkový produkční model navržený pro rychlé zpracování textů, analýzu RAG databází a přesné odpovídání bez zbytečné zátěže hardware.</p>
+            </div>
+            <div class="card">
+                <h3>Model NanoBlink</h3>
+                <p>Extrémně úsporná varianta navržená speciálně pro okamžité reakce v konverzačních rozhraních a na méně výkonných lokálních stanicích.</p>
+            </div>
+            <div class="card">
+                <h3>Striktní RAG Kaskáda</h3>
+                <p>Systém inteligentního vyhledávání informací, který automaticky prochází Wikipedii a chráněné webové zdroje, aby zajistil faktickou správnost.</p>
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-16 sm:py-28 bg-white border-b border-zinc-200">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-4 sm:mb-6 mono">// VRSTVA 03: LIDSKÝ FAKTOR & VÝZKUMNÝ TÝM</p>
-            <h2 class="text-3xl font-light tracking-tight sm:text-5xl mb-12 sm:mb-20">
-                Kdo stojí za OpenBlink AI Lab
-            </h2>
-
-            <div class="grid gap-12 grid-cols-1 md:grid-cols-3">
-                <div class="border-t border-black pt-4 sm:pt-6">
-                    <span class="text-[9px] mono font-bold block mb-2 text-zinc-400">FOUNDER // CORE RESEARCH</span>
-                    <h4 class="text-lg font-semibold tracking-tight mb-1">Tomáš Bdinka</h4>
-                    <p class="text-xs text-zinc-500 mono mb-3">tomasbdinka@seznam.cz</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Zodpovědný za celkový návrh sítě MicroBlink 3M, matematickou dedukci rozměrů skrytých vrstev SwiGLU a ladění parametrů pre-trainingu. Řídí směr výzkumu otevřených českých jazykových modelů a eliminuje systémové kolapsy gradientů.
-                    </p>
-                </div>
-                <div class="border-t border-black pt-4 sm:pt-6">
-                    <span class="text-[9px] mono font-bold block mb-2 text-zinc-400">CORE INFRASTRUCTURE DEVELOPER</span>
-                    <h4 class="text-lg font-semibold tracking-tight mb-1">Tomáš Bdinka</h4>
-                    <p class="text-xs text-zinc-500 mono mb-3">tomasbdinka@seznam.cz</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Spravuje lokální hardwarové CUDA prostředí, optimalizuje skripty v Thonny IDE a připravuje asynchronní datovou RAG pipeline. Pracuje na transformaci Python backendu do odlehčeného rozhraní a brzy také do spustitelného formátu pro koncové uživatele.
-                    </p>
-                </div>
-                <div class="border-t border-black pt-4 sm:pt-6">
-                    <span class="text-[9px] mono font-bold block mb-2 text-zinc-400">DATA & TOKENIZATION ENGINEER</span>
-                    <h4 class="text-lg font-semibold tracking-tight mb-1">Tomáš Bdinka</h4>
-                    <p class="text-xs text-zinc-500 mono mb-3">tomasbdinka@seznam.cz</p>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Zaměřuje se výhradně na textové korpusy, čištění dat ze souboru <code class="mono text-black bg-zinc-100 px-1 py-0.5 border border-zinc-200 text-[11px]">ceska_data.bin</code> a vývoj nativního českého tokenizeru o velikosti 12K. Zajišťuje, aby model správně komprimoval specifické znaky s diakritikou bez zbytečné tokenové režie.
-                    </p>
-                </div>
-            </div>
-        </div>
+    <section class="detailed-info" id="vyzkum">
+        <h2>Bezpečnost a faktická kontrola na prvním místě</h2>
+        <p>V OpenBlink AI věříme, že inteligence musí jít ruku v ruce se spolehlivostí. Naše modely jsou vybaveny vrstvami jako <strong>Identity Guard</strong> pro okamžitou ochranu identity systému a pokročilou křížovou kontrolou slov, která eliminuje halucinace a vymýšlení faktů.</p>
+        
+        <h2>Navrženo pro vývojáře i koncové uživatele</h2>
+        <p>Ať už integrujete naše řešení do interních podnikových systémů přes REST API, nebo chatujete přímo přes webové rozhraní Vercel, MicroBlink vám poskytne odpovědi postavené výhradně na reálných internetových podkladech.</p>
     </section>
 
-    <section id="roadmap" class="py-16 sm:py-28 bg-[#f4f4f5] border-b border-zinc-200">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-4 sm:mb-6 mono">// DOKUMENTACE PROGRESSU & BUDOUCÍ ARCHITEKTURA</p>
-            <h2 class="text-3xl font-light tracking-tight sm:text-5xl mb-12 sm:mb-20">
-                Roadmapa vývoje laboratoře OpenBlink AI
-            </h2>
-
-            <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                <div class="border-t border-black pt-4 sm:pt-6">
-                    <span class="text-[9px] sm:text-[10px] mono font-bold block mb-2 sm:mb-3 text-zinc-400">ETAPA 01 // HOTOVO</span>
-                    <h4 class="text-base sm:text-lg font-medium mb-2 tracking-tight">Matematické jádru & Pre-training</h4>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Definování tenzorových operací. Návrh vlastního tokenizačního skriptu s ošetřením české diakritiky. Úspěšný pre-training na GPU architektuře NVIDIA přes PyTorch CUDA prostředí. Dosažení stability a stlačení Loss pod 4.15.
-                    </p>
-                </div>
-                <div class="border-t border-black pt-4 sm:pt-6">
-                    <span class="text-[9px] sm:text-[10px] mono font-bold block mb-2 sm:mb-3 text-black">ETAPA 02 // V REALIZACI</span>
-                    <h4 class="text-base sm:text-lg font-medium mb-2 tracking-tight">Asynchronní RAG a Data-Streaming</h4>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Propojení modelu se streamovací pipeline využívající DuckDuckGo API. Vývoj paměťového manažeru, který drží internetový kontext výhradně v RAM/VRAM bez zápisu na lokální SSD. Odstraňování halucinačních tendencí.
-                    </p>
-                </div>
-                <div class="border-t border-zinc-350 lg:border-zinc-300 pt-4 sm:pt-6">
-                    <span class="text-[9px] sm:text-[10px] mono font-bold block mb-2 sm:mb-3 text-zinc-400">ETAPA 03 // PLÁNOVÁNO</span>
-                    <h4 class="text-base sm:text-lg font-medium mb-2 tracking-tight">Python Setup Wizard V1</h4>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Vytvoření plnohodnotného instalačního průvodce pro vývojáře. Skript automaticky detekuje hardwarovou konfiguraci (verzi CUDA ovladačů, kapacitu VRAM) a připraví optimalizované prostředí pro běh bez nutnosti manuální instalace knihoven.
-                    </p>
-                </div>
-                <div class="border-t border-zinc-350 lg:border-zinc-300 pt-4 sm:pt-6">
-                    <span class="text-[9px] sm:text-[10px] mono font-bold block mb-2 sm:mb-3 text-zinc-400">ETAPA 04 // PLÁNOVÁNO</span>
-                    <h4 class="text-base sm:text-lg font-medium mb-2 tracking-tight">PyToExe GUI Aplikace</h4>
-                    <p class="text-xs text-zinc-600 leading-relaxed">
-                        Kompletní zapouzdření projektu do spustitelného binárního souboru typu `.exe`. Součástí bude čisté minimalistické chatovací rozhraní postavené na CustomTkinter/PyQt, správa dočasné cache a izolovaná síťová vrstva.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-black text-white py-10 sm:py-14">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12 flex flex-col items-center lg:flex-row lg:justify-between gap-6 md:gap-8 text-xs text-zinc-500 text-center lg:text-left">
-            <div class="flex items-center gap-3 font-bold text-white uppercase tracking-widest mono">
-                <img src="logo.png" alt="OpenBlink AI Logo" class="h-4 w-4 object-contain brightness-0 invert">
-                <span>OpenBlink AI Lab</span>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mono text-[9px] sm:text-[10px] uppercase tracking-wider text-zinc-650">
-                <span>SYS: LOCAL_CUDA</span>
-                <span>LOSS: 4.1489</span>
-                <span>COMPILER: THONNY</span>
-                <span>ARCH: SWIGLU_6L</span>
-            </div>
-            <div class="text-[9px] sm:text-[10px] text-zinc-700 font-mono">
-                © 2026 OpenBlink AI Lab. Open Foundation Model initiative.
-            </div>
+    <footer>
+        <div>&copy; 2026 OpenBlink AI. Všechna práva vyhrazena.</div>
+        <div class="footer-links">
+            <a href="#">Ochrana dat</a>
+            <a href="#">Podmínky užití</a>
+            <a href="#">API dokumentace</a>
         </div>
     </footer>
 
