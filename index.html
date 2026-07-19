@@ -1,332 +1,227 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenBlink AI — MicroBlink 3M</title>
+    <title>OpenBlink AI — Výzkum otevřených modelů</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS Reset & Global Typography --- */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        
-        @page {
-            size: A4;
-            margin: 0; /* Full bleed layout control managed internally */
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #030014;
-            color: #f3f4f6;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- Color Palette & Visual Elements --- */
-        :root {
-            --bg-dark: #030014;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --accent-cyan: #00f2fe;
-            --accent-purple: #9b51e0;
-            --text-muted: #9ca3af;
-        }
-
-        /* --- Layout Structures --- */
-        .page-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-
-        header {
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .header-cell-left {
-            text-align: left;
-            vertical-align: middle;
-        }
-        
-        .header-cell-right {
-            text-align: right;
-            vertical-align: middle;
-        }
-
-        .logo {
-            font-size: 18pt;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .lang-toggle {
-            font-size: 9pt;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 20px 0;
-        }
-
-        .hero h1 {
-            font-size: 28pt;
-            font-weight: 800;
-            line-height: 1.2;
-            margin: 0 0 16px 0;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 12pt;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 32px auto;
-        }
-
-        .btn-table {
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            font-size: 10pt;
-            font-weight: 600;
-            border-radius: 6px;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, #00f2fe, #4facfe);
-            color: #030014;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.25);
-            margin-right: 12px;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            border: 1px solid var(--card-border);
-        }
-
-        /* --- Grid & Features (Tables for WeasyPrint layout stability) --- */
-        .section-title {
-            font-size: 14pt;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            margin: 0 0 24px 0;
-            color: #ffffff;
-            border-left: 3px solid var(--accent-purple);
-            padding-left: 12px;
-            page-break-after: avoid;
-        }
-
-        .features-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 16px;
-            margin: 0 -16px 40px -16px;
-            page-break-inside: avoid;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 20px;
-            vertical-align: top;
-            width: 50%;
-        }
-
-        .feature-card h3 {
-            font-size: 11pt;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-            color: var(--accent-cyan);
-        }
-
-        .feature-card p {
-            font-size: 9.5pt;
-            margin: 0;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        /* --- Terminal Block --- */
-        .terminal-container {
-            margin-bottom: 50px;
-            page-break-inside: avoid;
-        }
-
-        .terminal {
-            background: #07041a;
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 20px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 9.5pt;
-            color: #a7b3c2;
-            line-height: 1.5;
-        }
-
-        .terminal-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 10px;
-            margin-bottom: 14px;
-            color: var(--text-muted);
-            font-size: 8.5pt;
-        }
-
-        .terminal .comment { color: #5c6370; font-style: italic; }
-        .terminal .prompt { color: var(--accent-cyan); font-weight: bold; }
-        .terminal .keyword { color: var(--accent-purple); }
-        .terminal .string { color: #98c379; }
-
-        /* --- Content Sections --- */
-        .about-section {
-            background: linear-gradient(180deg, rgba(155, 81, 224, 0.03), transparent);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 60px;
-        }
-
-        .about-section p {
-            font-size: 10pt;
-            color: #d1d5db;
-            margin: 0 0 16px 0;
-            line-height: 1.6;
-        }
-        
-        .about-section p:last-child {
-            margin-bottom: 0;
-        }
-
-        footer {
-            border-top: 1px solid var(--card-border);
-            padding-top: 20px;
-            text-align: center;
-            font-size: 8.5pt;
-            color: var(--text-muted);
-        }
+        body { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+        .mono { font-family: 'Roboto Mono', monospace; }
     </style>
 </head>
-<body>
+<body class="bg-[#f9f9f9] text-[#000000] antialiased">
 
-    <div class="page-container">
-        <!-- Header -->
-        <header>
-            <table class="header-table">
-                <tr>
-                    <td class="header-cell-left">
-                        <div class="logo">OpenBlink AI</div>
-                    </td>
-                    <td class="header-cell-right">
-                        <span class="lang-toggle">CZ / EN</span>
-                    </td>
-                </tr>
-            </table>
-        </header>
-
-        <!-- Hero Section -->
-        <div class="hero">
-            <h1>Lokální výkon. Globální dopad.</h1>
-            <p>
-                Zažijte technologický průlom v kompaktních jazykových modelech. MicroBlink 3M přináší pokročilou inteligenci optimalizovanou přímo pro běžný lokální hardware.
-            </p>
-            <table class="btn-table">
-                <tr>
-                    <td><a href="#" class="btn btn-primary">Začít / Get Started</a></td>
-                    <td><a href="#" class="btn btn-secondary">Dokumentace</a></td>
-                </tr>
-            </table>
+    <header class="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 backdrop-blur-md">
+        <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12">
+            <a class="flex items-center gap-3 font-bold text-xl tracking-tight uppercase" href="#">
+                <span class="text-2xl font-light">○</span> OpenBlink AI
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-normal text-zinc-600">
+                <a class="hover:text-black transition-colors" href="#public-info">Pro veřejnost</a>
+                <a class="hover:text-black transition-colors" href="#developer-info">Pro vývojáře</a>
+                <a class="hover:text-black transition-colors" href="#architecture">Architektura</a>
+                <a class="hover:text-black transition-colors" href="#roadmap">Roadmapa</a>
+            </nav>
+            <a class="inline-flex h-9 items-center justify-center border border-black bg-black px-5 text-sm font-medium text-white hover:bg-transparent hover:text-black transition-all rounded-none" href="#chat">
+                Spustit chat ↗
+            </a>
         </div>
+    </header>
 
-        <!-- Features Grid -->
-        <h2 class="section-title">Architektura MicroBlink 3M</h2>
-        <table class="features-table">
-            <tr>
-                <td class="feature-card">
-                    <h3>3 Miliony Parametrů</h3>
-                    <p>Mikroskopická velikost umožňující okamžitou odezvu a plný provoz v paměti VRAM běžných přenosných počítačů bez ztráty přesnosti.</p>
-                </td>
-                <td class="feature-card">
-                    <h3>0% UNK Tokenizer</h3>
-                    <p>Unikátní, bezpečně uzamčená česká abeceda a BPE slovník zaručující nulový výskyt neznámých tokenů [UNK] při zpracování diakritiky.</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="feature-card">
-                    <h3>Grouped-Query Attention</h3>
-                    <p>Implementace GQA (známé z velkých modelů Llama 3) drasticky snižuje paměťové nároky KV cache a zrychluje generování textu na CPU.</p>
-                </td>
-                <td class="feature-card">
-                    <h3>Integrovaný RAG Web-Search</h3>
-                    <p>Architektura je od základu navržena pro spolupráci s internetovým kontextem a přesné extrahování faktů bez halucinací.</p>
-                </td>
-            </tr>
-        </table>
+    <main id="public-info">
+        
+        <section class="border-b border-zinc-200 bg-white py-24 md:py-32">
+            <div class="mx-auto max-w-7xl px-6 md:px-12">
+                <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 mono">// PŘEDSTAVUJEME MICROBLINK</p>
+                <h1 class="text-5xl font-light tracking-tight md:text-7xl lg:text-8xl max-w-5xl leading-[1.05] mb-8">
+                    Budoucnost českého AI výzkumu je otevřená.
+                </h1>
+                <p class="text-xl md:text-2xl font-light text-zinc-600 max-w-3xl leading-relaxed">
+                    Vytvořili jsme nezávislou výzkumnou laboratoř. Vyvíjíme malé, extrémně rychlé jazykové modely optimalizované pro český jazyk, které nepotřebují superpočítače a mohou běžet na běžném hardwaru.
+                </p>
+            </div>
+        </section>
 
-        <!-- Terminal Preview -->
-        <div class="terminal-container">
-            <h2 class="section-title">Ukázka inicializace</h2>
-            <div class="terminal">
-                <div class="terminal-header">// Inicializace modelu MicroBlink 3M v Pythonu</div>
-                <span class="comment"># 1. Instalace open-source knihovny</span><br>
-                <span class="prompt">$</span> pip install openblink-ai<br><br>
-                <span class="comment"># 2. Načtení architektury s GQA a tokenizéru</span><br>
-                <span class="keyword">import</span> openblink<br>
-                model = openblink.load(<span class="string">"microblink-3m"</span>)<br><br>
-                <span class="comment"># 3. Spuštění lokální inference s internetovým RAG</span><br>
-                <span class="prompt">$</span> python run_model.py --initialize --rag_enabled<br>
-                <span class="comment">&gt;&gt;&gt; [OK] Váhy microblink_3m_base.pt úspěšně načteny.</span>
+        <section class="border-b border-zinc-200 py-20">
+            <div class="mx-auto max-w-7xl px-6 md:px-12">
+                <div class="grid gap-12 md:grid-cols-3">
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold border-b border-black pb-3 mb-4">Co je OpenBlink AI?</h3>
+                        <p class="text-sm text-zinc-600 leading-relaxed">
+                            OpenBlink AI je projekt zaměřený na demokratizaci umělé inteligence v České republice. Zatímco velké korporace staví modely za miliardy dolarů uzavřené za placenými API, my v naší AI laboratoři trénujeme modely s plně otevřenými váhami (open-weights). Každý se může podívat do vnitřní struktury, stáhnout si soubor s váhami a provozovat AI lokálně bez cenzury a bez internetu.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold border-b border-black pb-3 mb-4">Proč na tom záleží?</h3>
+                        <p class="text-sm text-zinc-600 leading-relaxed">
+                            Většina globálních modelů (jako ChatGPT nebo Claude) se učí primárně na anglickém internetu. Čeština je pro ně pouze sekundární jazyk, což vede k chybám v gramatice, špatnému pochopení kulturního kontextu a vysokým nákladům na tokenizaci (česká slova spotřebují více tokenů). Náš výzkum se zaměřuje na efektivní kompresi českého jazyka přímo do základní architektury sítě.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold border-b border-black pb-3 mb-4">Bezpečnost a Soukromí</h3>
+                        <p class="text-sm text-zinc-600 leading-relaxed">
+                            Díky tomu, že naše modely dosahují extrémně malých rozměrů (3 miliony parametrů u vlajkové lodi MicroBlink 3M), k jejich chodu nepotřebujete cloud. Všechna vaše data, konverzace a citlivé dokumenty zůstávají přímo ve vašem počítači. Model neodesílá žádná data na externí servery, což poskytuje stoprocentní záruku soukromí pro korporátní i osobní nasazení.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="developer-info" class="bg-[#0f0f0f] text-white py-24 border-b border-zinc-850">
+        <div class="mx-auto max-w-7xl px-6 md:px-12">
+            
+            <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 mono">// SEKCE PRO VÝVOJÁŘE & AI INŽENÝRY</p>
+            <h2 class="text-4xl font-light tracking-tight md:text-6xl mb-16 max-w-4xl">
+                Jak vznikal MicroBlink: Pohled pod kapotu naší AI laboratoře.
+            </h2>
+
+            <div class="grid gap-16 lg:grid-cols-2">
+                <div class="space-y-6 text-zinc-400 text-sm leading-relaxed">
+                    <h3 class="text-xl font-medium text-white">Zrození projektu a metodika trénování</h3>
+                    <p>
+                        Vývoj modelu MicroBlink 3M začal s jasnou vizí: dokázat, že správně navržená architektura dokáže překonat brutální sílu hrubého počtu parametrů. Tréninkový proces jsme rozdělili do několika kritických fází, přičemž největší výzvou bylo efektivní čištění dat a ladění hyperparametrů na omezeném hardwarovém rozpočtu.
+                    </p>
+                    <p>
+                        Základní pre-training probíhal na speciálně vyčištěném korpusu českých textů o velikosti 26 MB (`ceska_data.bin`), což po tokenizaci představuje zhruba 13 milionů tokenů. Použili jsme vlastní tokenizer s velikostí slovníku (vocab size) 12 000 tokenů, což nám umožnilo optimálně komprimovat česká specifická slova a znaky s diakritikou.
+                    </p>
+                    <p>
+                        Během trénování jsme se potýkali s klasickým problémem nesouladu dimenzí u lineárních vrstev feed-forward sítě (FFN). Po detailní analýze checkpointů a gradientů jsme implementovali pokročilé SwiGLU brány s vnitřním rozměrem vrstvy nastaveným přesně na 682, což vedlo ke stabilizaci tréninkové smyčky a prudkému poklesu Loss funkce až na finální hodnotu 4.1.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-medium text-white mb-6">Technické specifikace MicroBlink 3M</h3>
+                    <div class="border-t border-zinc-800 text-sm mono">
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Počet parametrů</span>
+                            <span>3,000,000 (3M)</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Architektura FFN</span>
+                            <span>SwiGLU (w1, w2, w3)</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Vnitřní rozměr FFN</span>
+                            <span>682</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Dimenze modelu (d_model)</span>
+                            <span>256</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Počet vrstev / Hlavy</span>
+                            <span>6 vrstev / 8 hlav</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Mechanismus Attention</span>
+                            <span>GQA (Grouped-Query Attention)</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Poziční embedding</span>
+                            <span>RoPE (Rotary Position Embedding)</span>
+                        </div>
+                        <div class="flex justify-between py-3 border-b border-zinc-800">
+                            <span class="text-zinc-500">Velikost slovníku</span>
+                            <span>12,000 tokenů</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- About Lab -->
-        <h2 class="section-title">O laboratoři OpenBlink AI</h2>
-        <div class="about-section">
-            <p>
-                Jsme specializovaná výzkumná laboratoř zaměřená na budoucnost lokalizované umělé inteligence. Naším cílem je vyvíjet extrémně malé, hyper-fokusované a vysoce optimalizované jazykové modely, které nepotřebují obří korporátní datacentra.
-            </p>
-            <p>
-                Věříme v naprostou demokratizaci AI, zachování stoprocentního soukromí dat, snížení provozních nákladů na nulu a zpřístupnění špičkových technologií pro vývojáře i koncové uživatele kdekoli na světě.
-            </p>
+    <section id="architecture" class="py-24 bg-white border-b border-zinc-200">
+        <div class="mx-auto max-w-7xl px-6 md:px-12">
+            <div class="max-w-3xl">
+                <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 mono">// INOVACE VE VYHLEDÁVÁNÍ</p>
+                <h2 class="text-4xl font-light tracking-tight md:text-5xl mb-8">
+                    Data Streaming Pipeline: Proč nepotřebujeme miliony dolarů na trénink.
+                </h2>
+                <div class="space-y-6 text-zinc-600 text-base leading-relaxed">
+                    <p>
+                        Namísto ukládání celého internetu do statických vah modelu (což vyžaduje tisíce drahých A100/H100 grafik a miliony dolarů) využívá naše laboratoř dynamickou architekturu **RAG (Retrieval-Augmented Generation)** propojenou se streamováním dat v reálném čase.
+                    </p>
+                    <p>
+                        Když uživatel položí dotaz, náš systém provede bleskový asynchronní dotaz na vyhledávací síť DuckDuckGo. Výsledné textové streamy se neukládají na pevný disk, čímž eliminujeme pomalou I/O režii SSD/HDD, ale streamují se přímo do operační paměti a VRAM grafické karty. Zde jsou data okamžitě tokenizována a injektována jako dynamický `[CONTEXT]` přímo do promptu pro MicroBlink 3M.
+                    </p>
+                    <p>
+                        Model pak funguje jako vysoce efektivní logický procesor: nemusí si informace pamatovat (čímž zcela mizí problém s halucinacemi), ale pouze analyzuje text streamovaný z internetu a generuje přesnou, aktuální odpověď.
+                    </p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Footer -->
-        <footer>
-            &copy; 2026 OpenBlink AI Lab. Všechna práva vyhrazena. | Společně tvoříme efektivní inteligenci.
-        </footer>
-    </div>
+    <section id="roadmap" class="py-24 bg-[#f9f9f9]">
+        <div class="mx-auto max-w-7xl px-6 md:px-12">
+            
+            <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4 mono">// MILNÍKY A BUDOUCNOST</p>
+            <h2 class="text-4xl font-light tracking-tight md:text-5xl mb-16">
+                Vývojová Roadmapa OpenBlink AI
+            </h2>
+
+            <div class="grid gap-8 md:grid-cols-4">
+                
+                <div class="border-t-2 border-black pt-4">
+                    <span class="text-xs mono font-bold block mb-2 text-zinc-500">FAZE 01 — DOKONČENO</span>
+                    <h4 class="text-lg font-semibold mb-2">Pre-training & Core</h4>
+                    <p class="text-xs text-zinc-600 leading-relaxed">
+                        Návrh vlastní SwiGLU / RoPE architektury. Odladění rozměrů matic (FFN dim 682). Úspěšný pre-training na 26MB českém datasetu s finální Loss stabilitou 4.1.
+                    </p>
+                </div>
+
+                <div class="border-t-2 border-black pt-4">
+                    <span class="text-xs mono font-bold block mb-2 text-zinc-400">FAZE 02 — PROBÍHÁ</span>
+                    <h4 class="text-lg font-semibold mb-2">Data Streaming RAG</h4>
+                    <p class="text-xs text-zinc-600 leading-relaxed">
+                        Implementace síťového rozhraní pro live streamování z DuckDuckGo API. Odstraňování diskové cache paměti a směrování kontextu přímo do VRAM pro nulovou latenci.
+                    </p>
+                </div>
+
+                <div class="border-t-2 border-zinc-300 pt-4">
+                    <span class="text-xs mono font-bold block mb-2 text-zinc-400">FAZE 03 — PLÁNOVÁNO</span>
+                    <h4 class="text-lg font-semibold mb-2">Python Setup Wizard</h4>
+                    <p class="text-xs text-zinc-600 leading-relaxed">
+                        Vytvoření plnohodnotného instalačního průvodce, který automaticky nakonfiguruje CUDA prostředí, stáhne potřebné knihovny a připraví aplikaci pro koncového uživatele.
+                    </p>
+                </div>
+
+                <div class="border-t-2 border-zinc-300 pt-4">
+                    <span class="text-xs mono font-bold block mb-2 text-zinc-400">FAZE 04 — PLÁNOVÁNO</span>
+                    <h4 class="text-lg font-semibold mb-2">PyToExe GUI Aplikace</h4>
+                    <p class="text-xs text-zinc-600 leading-relaxed">
+                        Zabalení celého backendu do samostatného `.exe` souboru s grafickým rozhraním. Integrované chatovací okno, správa dočasného úložiště a lokální síťová optimalizace.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-12 border-t border-zinc-800">
+        <div class="mx-auto max-w-7xl px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-500">
+            <div class="flex items-center gap-2 font-bold text-white uppercase tracking-wider">
+                <span class="text-xl font-light">○</span> OpenBlink AI Lab
+            </div>
+            <div class="flex gap-6 mono text-xs">
+                <span>LOC: CUDA_DEVICE_0</span>
+                <span>LOSS: 4.1489</span>
+                <span>VOCAB: 12K</span>
+            </div>
+            <div class="text-xs text-zinc-600">
+                © 2026 OpenBlink AI Lab. Všechna práva vyhrazena. open source výzkum.
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
