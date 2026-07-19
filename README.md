@@ -12,6 +12,7 @@ Rodina Blink se skládá ze tří specificky navržených úrovní. Každá úro
 
 | Model | Velikost | Primární jazyk | Doporučený hardware | Hlavní účel |
 | :--- | :--- | :--- | :--- | :--- |
+| **MicroBlink** | **3M** parametrů |Základní čeština (CZ) | Mobilní GPU | Testování architektury, porozumění základní české gramatice, rychlá extrakce z kontextu. |
 | **NanoBlink** | **6M** parametrů | Čeština (CZ) | Spotřebitelské GPU (např. RTX 3050 Laptop) | Lokální testování, porozumění české gramatice, rychlá extrakce z kontextu. |
 | **TinyBlink** | **24M** parametrů | Angličtina (EN) | Bezplatný cloud / Slabší GPU (např. Tesla T4) | Plynulá konverzace, pokročilé filtrování informací z DuckDuckGo API. |
 | **Blink** | **96M** parametrů | Bilingvní (CZ / EN) | Multi-GPU / Vyšší výkon (např. 2x T4 / RTX 3090) | Vlajková loď, přepínání jazyků, základy logického uvažování a encyklopedie. |
