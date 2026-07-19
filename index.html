@@ -78,7 +78,7 @@
             min-height: 90vh;
             display: flex;
             align-items: center;
-            padding: 120px 8% 60px 8%;
+            padding: 140px 8% 60px 8%;
             position: relative;
         }
 
@@ -172,9 +172,9 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        /* Informační grid (Obsahová část) */
+        /* Informační grid (Klikatelné karty) */
         .info-section {
-            padding: 80px 8%;
+            padding: 90px 8%;
             background-color: #000000;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -189,38 +189,70 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .card {
             background: #0d0d0d;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 35px;
+            padding: 30px;
             border-radius: 8px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+            background-color: #121212;
             transform: translateY(-4px);
         }
 
-        .card h3 {
-            font-size: 1.4rem;
+        .card-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666666;
+            margin-bottom: 10px;
             font-weight: 600;
-            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
             color: #ffffff;
         }
 
         .card p {
             color: #a1a1a6;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-action {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            transition: color 0.2s ease;
+        }
+
+        .card:hover .card-action {
+            color: #a1a1a6;
         }
 
         /* Detailní textový blok */
         .detailed-info {
-            padding: 80px 8%;
+            padding: 90px 8%;
             max-width: 900px;
             margin: 0 auto;
         }
@@ -229,12 +261,13 @@
             font-size: 2rem;
             margin-bottom: 20px;
             color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
         .detailed-info p {
             color: #a1a1a6;
             font-size: 1.1rem;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         /* Patička */
@@ -265,14 +298,14 @@
             color: #a1a1a6;
         }
 
-        /* Rychlé responzivní úpravy pro mobilní zařízení */
+        /* Mobilní responzivita */
         @media (max-width: 768px) {
             header {
                 padding: 15px 20px;
             }
 
             .nav-links {
-                display: none; /* Schová klasické menu pro zachování čistoty displeje */
+                display: none; /* Schová odkazy pro čistotu mobilního zobrazení */
             }
 
             .hero {
@@ -296,6 +329,11 @@
             .section-title {
                 font-size: 1.8rem;
                 text-align: left;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .card {
@@ -349,34 +387,57 @@
     </section>
 
     <section class="info-section" id="modely">
-        <h2 class="section-title">Naše technologická architektura</h2>
+        <h2 class="section-title">Produkční řada modelů Blink v1</h2>
         
         <div class="grid">
-            <div class="card">
-                <h3>Model MicroBlink</h3>
-                <p>Náš vlajkový produkční model navržený pro rychlé zpracování textů, analýzu RAG databází a přesné odpovídání bez zbytečné zátěže hardware.</p>
-            </div>
-            <div class="card">
-                <h3>Model NanoBlink</h3>
-                <p>Extrémně úsporná varianta navržená speciálně pro okamžité reakce v konverzačních rozhraních a na méně výkonných lokálních stanicích.</p>
-            </div>
-            <div class="card">
-                <h3>Striktní RAG Kaskáda</h3>
-                <p>Systém inteligentního vyhledávání informací, který automaticky prochází Wikipedii a chráněné webové zdroje, aby zajistil faktickou správnost.</p>
-            </div>
+            <a href="https://openblink.vercel.app/micro" class="card-link">
+                <div class="card">
+                    <div class="card-meta">3M parametrů</div>
+                    <h3>MicroBlink_v1:3M</h3>
+                    <p>Ultra-efektivní model navržený pro okamžité RAG operace a extrémně rychlé zpracování jednoduchých textových odpovědí v reálném čase.</p>
+                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://openblink.vercel.app/nano" class="card-link">
+                <div class="card">
+                    <div class="card-meta">6M parametrů</div>
+                    <h3>NanoBlink_v1:6M</h3>
+                    <p>Vybalancovaný asistent s Identity Guard ochranou. Ideální pro mobilní chatovací rozhraní a rychlé vyhodnocování internetových rešerší.</p>
+                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://openblink.vercel.app/tiny" class="card-link">
+                <div class="card">
+                    <div class="card-meta">12M parametrů</div>
+                    <h3>TinyBlink_v1:12M</h3>
+                    <p>Pokročilejší architektura zvládající komplexnější logické úlohy, matematické výpočty a detailnější syntézu textu z více zdrojů.</p>
+                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://openblink.vercel.app/blink" class="card-link">
+                <div class="card">
+                    <div class="card-meta">24M parametrů</div>
+                    <h3>Blink_v1:24M</h3>
+                    <p>Náš nejvýkonnější model této řady. Navržen pro hlubokou analýzu kontextu, generování dlouhých spisovných textů a plnou API automatizaci.</p>
+                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                </div>
+            </a>
         </div>
     </section>
 
     <section class="detailed-info" id="vyzkum">
         <h2>Bezpečnost a faktická kontrola na prvním místě</h2>
-        <p>V OpenBlink AI věříme, že inteligence musí jít ruku v ruce se spolehlivostí. Naše modely jsou vybaveny vrstvami jako <strong>Identity Guard</strong> pro okamžitou ochranu identity systému a pokročilou křížovou kontrolou slov, která eliminuje halucinace a vymýšlení faktů.</p>
+        <p>V OpenBlink AI věříme, že inteligence musí jít ruku v ruce se spolehlivostí. Naše modely jsou vybaveny architekturou <strong>Identity Guard</strong> pro okamžitou ochranu identity systému a pokročilou křížovou kontrolou slov, která eliminuje halucinace a vymýšlení faktů.</p>
         
         <h2>Navrženo pro vývojáře i koncové uživatele</h2>
-        <p>Ať už integrujete naše řešení do interních podnikových systémů přes REST API, nebo chatujete přímo přes webové rozhraní Vercel, MicroBlink vám poskytne odpovědi postavené výhradně na reálných internetových podkladech.</p>
+        <p>Ať už integrujete naše řešení do interních podnikových systémů přes REST API, nebo chatujete přímo přes webové rozhraní Vercel, MicroBlink a jeho pokročilé varianty vám poskytnou odpovědi postavené výhradně na reálných internetových podkladech.</p>
     </section>
 
     <footer>
-        <div>&copy; 2026 OpenBlink AI. Všechna práva vyhrazena.</div>
+        <div>&copy; 2026 OpenBlink AI. Všechna práva reserved.</div>
         <div class="footer-links">
             <a href="#">Ochrana dat</a>
             <a href="#">Podmínky užití</a>
