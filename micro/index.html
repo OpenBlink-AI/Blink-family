@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBlink_v1:3M — Technická dokumentace</title>
+    <style>
+        /* Reset a globální nastavení */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #f5f5f7;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fixní navigace */
+        header {
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .logo-img {
+            height: 32px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .back-link {
+            color: #a1a1a6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+        }
+
+        /* Hlavní kontejner obsahu */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 140px 20px 80px 20px;
+        }
+
+        .model-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 30px;
+        }
+
+        .meta-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666666;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .lead-p {
+            font-size: 1.25rem;
+            color: #a1a1a6;
+            margin-bottom: 30px;
+        }
+
+        /* Skupina tlačítek na repozitáře */
+        .repo-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-repo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-hf {
+            background-color: #ffd21e;
+            color: #000000;
+        }
+
+        .btn-hf:hover {
+            background-color: #e6bd19;
+        }
+
+        .btn-github {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn-github:hover {
+            background-color: #e5e5e5;
+        }
+
+        .btn-repo svg {
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Technické sekce */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #a1a1a6;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        /* Stylování tabulky specifikací */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: #000000;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 14px 20px;
+            text-align: left;
+        }
+
+        .specs-table th {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .specs-table td {
+            color: #a1a1a6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.95rem;
+        }
+
+        .specs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .specs-table strong {
+            color: #ffffff;
+        }
+
+        /* Ukázka kódu */
+        pre {
+            background-color: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.9rem;
+            color: #e5e5e5;
+        }
+
+        /* Listy */
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            color: #a1a1a6;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        /* Patička */
+        footer {
+            padding: 40px 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #000000;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666666;
+        }
+
+        /* Mobilní optimalizace */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .container {
+                padding-top: 100px;
+            }
+
+            .repo-buttons {
+                flex-direction: column;
+            }
+
+            .btn-repo {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="logo-container">
+            <img src="https://openblink.vercel.app/logo.png" alt="OpenBlink AI Logo" class="logo-img">
+            <span class="logo-text">OpenBlink AI</span>
+        </a>
+        <a href="/" class="back-link">&larr; Zpět na hlavní web</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="model-header">
+            <span class="meta-tag">Technická dokumentace</span>
+            <h1>MicroBlink_v1:3M</h1>
+            <p class="lead-p">Detailní rozbor architektury našeho nejmenšího produkčního modelu optimalizovaného pro embedding, rychlou extrakci informací a lokální vyhodnocování RAG kaskád.</p>
+            
+            <div class="repo-buttons">
+                <a href="https://huggingface.co/" target="_blank" class="btn-repo btn-hf">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 6C13.6569 6 15 7.34315 15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6ZM16.5 16.5C15.5 17.5 13.8 18 12 18C10.2 18 8.5 17.5 7.5 16.5C7 16 7 15.2 7.5 14.7C8 14.2 8.8 14.2 9.3 14.7C9.9 15.3 10.9 15.7 12 15.7C13.1 15.7 14.1 15.3 14.7 14.7C15.2 14.2 16 14.2 16.5 14.7C17 15.2 17 16 16.5 16.5Z" fill="currentColor"/>
+                    </svg>
+                    Hugging Face repozitář
+                </a>
+                
+                <a href="https://github.com/" target="_blank" class="btn-repo btn-github">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    Zdrojový kód na GitHubu
+                </a>
+            </div>
+        </div>
+
+        <section>
+            <h2>Technické specifikace</h2>
+            <p>Model MicroBlink v1 s velikostí 3 miliony parametrů reprezentuje špičku v oblasti tzv. <i>edge-computing</i> modelů. Byl vyvinut za účelem extrémně levného a rychlého nasazení.</p>
+            
+            <table class="specs-table">
+                <thead>
+                    <tr>
+                        <th>Parametr</th>
+                        <th>Hodnota / Specifikace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Celkový počet parametrů</strong></td>
+                        <td>3 240 500 (~3M)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architektura základního LLM</strong></td>
+                        <td>Causal Decoder-Only Transformer (upravené vrstvy)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Maximální délka kontextu</strong></td>
+                        <td>512 tokenů (ideální pro věcné Q&A)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hlavní funkce a filtry</strong></td>
+                        <td>Identity Guard v1, Striktní RAG cross-check</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doporučená konfigurace hardware</strong></td>
+                        <td>CPU (libovolné moderní), CUDA (volitelně - spotřeba <100MB VRAM)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Architektura a trénovací proces</h2>
+            <p>MicroBlink_v1 byl trénován metodou selektivní destilace znalostí z větších jazykových modelů a následně laděn na specifických datech českého internetového prostoru. Primární důraz byl kladen na schopnost odolat halucinacím – pokud model nedostane v textovém kontextu přesná fakta, zasáhne křížová kontrola slov a model odmítne odpověď fabulovat.</p>
+            <ul>
+                <li><strong>Tokenizace:</strong> Používá upravený BPE (Byte-Pair Encoding) slovník s plnou nativní podporou české diakritiky bez penalizace délky kontextu.</li>
+                <li><strong>Smart Switch:</strong> Model interně obsahuje rychlou matematickou a faktickou rozhodovací vrstvu, která jednoduché encyklopedické definice filtruje okamžitě, bez nutnosti generování celého grafu.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Příklad lokální inference (Python)</h2>
+            <p>Díky minimalistickým rozměrům lze model zavolat v produkčním skriptu pomocí knihovny `transformers` v několika řádcích kódu:</p>
+            
+<pre><code>import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# Načtení z lokálního úložiště
+tokenizer = AutoTokenizer.from_pretrained("./muj_tokenizer")
+model = AutoModelForCausalLM.from_pretrained("./muj_3m_model").to("cpu")
+
+prompt = "Kontext: Elon Musk je podnikatel.\nOtázka: Kdo je Elon Musk?\nPodrobná odpověď:"
+input_ids = tokenizer.encode(prompt, return_tensors="pt")
+
+with torch.no_grad():
+    output = model.generate(input_ids, max_new_tokens=50, do_sample=False)
+
+print(tokenizer.decode(output[0], skip_special_tokens=True))
+</code></pre>
+        </section>
+
+    </div>
+
+    <footer>
+        <div>&copy; 2026 OpenBlink AI. Výzkum a dokumentace modelů MicroBlink.</div>
+    </footer>
+
+</body>
+</html>
