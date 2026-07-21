@@ -3,445 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenBlink AI — Inteligentní budoucnost</title>
+    <title>OpenBlink AI Architecture & Research Portal | Dokumentace & Modely</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset a globální nastavení */
+        :root {
+            --bg: #030407;
+            --card-bg: #0a0c13;
+            --card-border: #181c2e;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --blue-accent: #6366f1;
+            --blue-glow: rgba(99, 102, 241, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
+            --code-bg: #05060a;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #f5f5f7;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.65;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        /* Fixní moderní navigace */
-        header {
-            width: 100%;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Background Grid Pattern */
+        body::after {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1000;
-            background: rgba(13, 13, 13, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0),
+                radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 0);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .logo-container {
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: #34d399;
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 5%;
+            border-bottom: 1px solid var(--card-border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(3, 4, 7, 0.92);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #ffffff;
+            gap: 10px;
         }
 
-        .logo-img {
-            height: 32px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        .logo span {
+            color: var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.8rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 24px;
+            list-style: none;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .nav-links a {
-            color: #a1a1a6;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            color: var(--text-muted);
         }
 
         .nav-links a:hover {
-            color: #ffffff;
-        }
-
-        /* Hero sekce (Úvodní obrazovka) */
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            padding: 140px 8% 60px 8%;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 750px;
-            z-index: 2;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 25px;
-            color: #ffffff;
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 600;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            margin-bottom: 25px;
-            color: #ffffff;
-        }
-
-        .hero-p {
-            font-size: 1.35rem;
-            color: #a1a1a6;
-            margin-bottom: 40px;
-            max-width: 650px;
-        }
-
-        /* Tlačítka */
-        .cta-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            background-color: #ffffff;
-            color: #000000;
+            color: var(--text-main);
             text-decoration: none;
-            padding: 14px 28px;
+        }
+
+        .nav-btn {
+            background: var(--accent);
+            color: #000;
+            padding: 8px 18px;
             border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
         }
 
-        .btn-primary:hover {
-            background-color: #e5e5e5;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary svg {
-            margin-left: 8px;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-primary:hover svg {
-            transform: translateX(4px);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            background-color: transparent;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .nav-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        .btn-secondary:hover {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        /* Informační grid (Klikatelné karty) */
-        .info-section {
-            padding: 90px 8%;
-            background-color: #000000;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 50px;
-            letter-spacing: -1px;
+        /* Header / Hero */
+        header {
+            padding: 160px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
             text-align: center;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
+        .badge-bar {
+            display: inline-flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .card-link {
-            text-decoration: none;
-            color: inherit;
+        .badge {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-blue {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--blue-accent);
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 span.highlight {
+            color: var(--accent);
+            background: linear-gradient(180deg, #34d399 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.hero-sub {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 860px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-header {
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header h2::before {
+            content: "//";
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-top: 8px;
+        }
+
+        /* Models Grid Section */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .model-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 35px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+        }
+
+        .model-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
             display: block;
         }
 
-        .card {
-            background: #0d0d0d;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 8px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-        }
-
-        .card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            background-color: #121212;
-            transform: translateY(-4px);
-        }
-
-        .card-meta {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666666;
+        .model-card h3 {
+            font-size: 1.8rem;
             margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #ffffff;
-        }
-
-        .card p {
-            color: #a1a1a6;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .card-action {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ffffff;
-            transition: color 0.2s ease;
-        }
-
-        .card:hover .card-action {
-            color: #a1a1a6;
-        }
-
-        /* Detailní textový blok */
-        .detailed-info {
-            padding: 90px 8%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .detailed-info h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #ffffff;
             letter-spacing: -0.5px;
         }
 
-        .detailed-info p {
-            color: #a1a1a6;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+        .model-specs {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
         }
 
-        /* Patička */
-        footer {
-            padding: 50px 8%;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: #000000;
+        .spec-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #666666;
-            flex-wrap: wrap;
-            gap: 20px;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
         }
 
-        .footer-links {
-            display: flex;
-            gap: 20px;
+        .spec-row:last-child {
+            border-bottom: none;
         }
 
-        .footer-links a {
-            color: #666666;
+        .spec-label {
+            color: var(--text-dim);
+        }
+
+        .spec-val {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .model-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .btn-model {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .btn-model:hover {
+            background: var(--accent);
+            color: #000;
             text-decoration: none;
         }
 
-        .footer-links a:hover {
-            color: #a1a1a6;
+        /* Deep Technical Content / Article Section */
+        .wiki-article {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 50px;
+            margin-bottom: 80px;
         }
 
-        /* Mobilní responzivita */
+        .wiki-article h3 {
+            font-size: 1.6rem;
+            color: var(--text-main);
+            margin: 40px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: -0.5px;
+        }
+
+        .wiki-article h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .wiki-article h4 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 24px 0 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .wiki-article p {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+            margin-bottom: 18px;
+            font-weight: 300;
+            text-align: justify;
+        }
+
+        .wiki-article ul, .wiki-article ol {
+            color: var(--text-muted);
+            margin: 0 0 24px 24px;
+            font-weight: 300;
+        }
+
+        .wiki-article li {
+            margin-bottom: 8px;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #34d399;
+            overflow-x: auto;
+            margin: 25px 0;
+            line-height: 1.5;
+        }
+
+        .code-header {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Benchmark & Comparison Table */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 30px 0;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: #0f121d;
+            color: var(--text-main);
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        td.highlight-cell {
+            color: var(--accent);
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Architecture Visualizer Box */
+        .arch-diagram {
+            background: var(--code-bg);
+            border: 1px dashed var(--accent);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .arch-step {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent);
+        }
+
+        .arch-title {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .arch-desc {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 60px 20px 40px;
+            background: #020305;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
         @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            .nav-links {
-                display: none; /* Schová odkazy pro čistotu mobilního zobrazení */
-            }
-
-            .hero {
-                padding: 120px 20px 60px 20px;
-                min-height: auto;
-            }
-
-            h1 {
-                font-size: 2.6rem;
-                letter-spacing: -1px;
-            }
-
-            .hero-p {
-                font-size: 1.1rem;
-            }
-
-            .info-section {
-                padding: 60px 20px;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-                text-align: left;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .card {
-                padding: 25px;
-            }
-
-            .detailed-info {
-                padding: 60px 20px;
-            }
-
-            footer {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 40px 20px;
-            }
+            h1 { font-size: 2.4rem; }
+            .nav-links { display: none; }
+            .models-grid { grid-template-columns: 1fr; }
+            .wiki-article { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
+    <nav>
+        <div class="logo">
+            ⚡ OPENBLINK<span>ARCHITECTURE</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#models">Modely</a></li>
+            <li><a href="#architecture">Architektura</a></li>
+            <li><a href="#rag-engine">Nativní RAG Agent</a></li>
+            <li><a href="#benchmarks">Benchmarky</a></li>
+            <li><a href="#datasets">Dataset Pipeline</a></li>
+        </ul>
+        <a href="https://openblink.vercel.app/velocity" class="nav-btn">Vyzkoušet Blink Velocity ↗</a>
+    </nav>
+
     <header>
-        <a href="#" class="logo-container">
-            <img src="https://openblink.vercel.app/logo.png" alt="OpenBlink AI Logo" class="logo-img">
-            <span class="logo-text">OpenBlink AI</span>
-        </a>
-        <nav class="nav-links">
-            <a href="#vyzkum">Výzkum</a>
-            <a href="#modely">Modely</a>
-            <a href="#bezpecnost">Bezpečnost</a>
-            <a href="#spolecnost">Společnost</a>
-        </nav>
+        <div class="badge-bar">
+            <span class="badge">OpenBlink AI Research</span>
+            <span class="badge badge-blue">Czech-First Micro-Agent Intelligence</span>
+            <span class="badge">Zero-GPU Execution</span>
+        </div>
+        <h1>Maximální česká inteligence.<br>Nativní <span class="highlight">RAG-Agentický Engine</span>.<br>Běh bez GPU.</h1>
+        <p class="hero-sub">
+            Kompletní dokumentační a výzkumný portál architektury OpenBlink. Objevte, jak naše micro-modely od 12M po 192M parametrů revolučně kombinují extrémní hardwarovou efektivitu, interní analytické uvažování a přirozený český chatbot feel.
+        </p>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="badge">Představujeme MicroBlink v1</div>
-            <h1>Posouváme hranice možností umělé inteligence.</h1>
-            <p class="hero-p">Vyvíjíme vysoce optimalizované, bezpečné a bleskurychlé jazykové modely, které mění způsob každodenní práce s daty a informacemi.</p>
-            
-            <div class="cta-group">
-                <a href="https://openblink.vercel.app/chat" class="btn-primary">
-                    Přejít do chatu
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="#vyzkum" class="btn-secondary">Číst dokumentaci</a>
+    <main class="container">
+
+        <section id="models" style="scroll-margin-top: 100px;">
+            <div class="section-header">
+                <h2>Modelová Rodina OpenBlink</h2>
+                <p>Nativně vytrénované české micro-modely optimalizované pro GGUF, Ollama a Edge rozhraní.</p>
             </div>
-        </div>
-    </section>
 
-    <section class="info-section" id="modely">
-        <h2 class="section-title">Produkční řada modelů Blink v1</h2>
-        
-        <div class="grid">
-            <a href="https://openblink.vercel.app/micro" class="card-link">
-                <div class="card">
-                    <div class="card-meta">3M parametrů</div>
-                    <h3>MicroBlink_v1:3M</h3>
-                    <p>Ultra-efektivní model navržený pro okamžité RAG operace a extrémně rychlé zpracování jednoduchých textových odpovědí v reálném čase.</p>
-                    <span class="card-action">Vyzkoušet model &rarr;</span>
+            <div class="models-grid">
+
+                <div class="model-card">
+                    <div>
+                        <span class="model-tag">// Ultra-Micro / Edge IoT</span>
+                        <h3>Blink Spark</h3>
+                        <p class="model-desc">
+                            Extrémně lehký model určený pro mikrokontrolery, mobilní aplikace a bleskovou klasifikaci českých textových streamů v reálném čase.
+                        </p>
+                        <div class="model-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Parametry:</span>
+                                <span class="spec-val">12 M (12 450 000)</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">RAM / VRAM:</span>
+                                <span class="spec-val">&lt; 45 MB</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Latency (CPU):</span>
+                                <span class="spec-val">~ 4.2 ms / token</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Primární užití:</span>
+                                <span class="spec-val">Filter, Intent, IoT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://openblink.vercel.app/spark/" class="btn-model">Detail Modelu: Blink Spark ↗</a>
                 </div>
-            </a>
 
-            <a href="https://openblink.vercel.app/nano" class="card-link">
-                <div class="card">
-                    <div class="card-meta">6M parametrů</div>
-                    <h3>NanoBlink_v1:6M</h3>
-                    <p>Vybalancovaný asistent s Identity Guard ochranou. Ideální pro mobilní chatovací rozhraní a rychlé vyhodnocování internetových rešerší.</p>
-                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                <div class="model-card">
+                    <div>
+                        <span class="model-tag">// Mid-Micro / RAG Core</span>
+                        <h3>Blink Pulse</h3>
+                        <p class="model-desc">
+                            Perfektní balanc mezi rychlostí a chápáním kontextu. Ideální motor pro autocomplete, sumarizace a rychlé RAG asistenty.
+                        </p>
+                        <div class="model-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Parametry:</span>
+                                <span class="spec-val">48 M (48 120 000)</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">RAM / VRAM:</span>
+                                <span class="spec-val">~ 180 MB</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Latency (CPU):</span>
+                                <span class="spec-val">~ 12.8 ms / token</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Primární užití:</span>
+                                <span class="spec-val">RAG Extrakce, Sumarizace</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://openblink.vercel.app/pulse/" class="btn-model">Detail Modelu: Blink Pulse ↗</a>
                 </div>
-            </a>
 
-            <a href="https://openblink.vercel.app/tiny" class="card-link">
-                <div class="card">
-                    <div class="card-meta">12M parametrů</div>
-                    <h3>TinyBlink_v1:12M</h3>
-                    <p>Pokročilejší architektura zvládající komplexnější logické úlohy, matematické výpočty a detailnější syntézu textu z více zdrojů.</p>
-                    <span class="card-action">Vyzkoušet model &rarr;</span>
+                <div class="model-card" style="border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, var(--card-bg) 0%, rgba(16,185,129,0.03) 100%);">
+                    <div>
+                        <span class="model-tag" style="color: #34d399;">// Flagship / Full Agentic Engine</span>
+                        <h3>Blink Velocity</h3>
+                        <p class="model-desc">
+                            Vlajková loď projektu. Obsahuje kompletní pipeline: extrakci, křížovou kontrolu zdrojů, syntézu a sympatický český chatbot feel.
+                        </p>
+                        <div class="model-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Parametry:</span>
+                                <span class="spec-val">192 M (191 800 000)</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">RAM / VRAM:</span>
+                                <span class="spec-val">~ 520 MB</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Latency (CPU):</span>
+                                <span class="spec-val">~ 28.5 ms / token</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Primární užití:</span>
+                                <span class="spec-val">Full RAG Agent, Chatbot</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://openblink.vercel.app/velocity" class="btn-model" style="background: var(--accent); color: #000;">Detail Modelu: Blink Velocity ↗</a>
                 </div>
-            </a>
 
-            <a href="https://openblink.vercel.app/blink" class="card-link">
-                <div class="card">
-                    <div class="card-meta">24M parametrů</div>
-                    <h3>Blink_v1:24M</h3>
-                    <p>Náš nejvýkonnější model této řady. Navržen pro hlubokou analýzu kontextu, generování dlouhých spisovných textů a plnou API automatizaci.</p>
-                    <span class="card-action">Vyzkoušet model &rarr;</span>
+            </div>
+        </section>
+
+        <section id="architecture" style="scroll-margin-top: 100px;">
+            <div class="section-header">
+                <h2>Kompletní Technická Specifikace & Architektura</h2>
+                <p>Detailní pohled do nitra výzkumu, tréninkových fází, matematického aparátu a datových toků.</p>
+            </div>
+
+            <article class="wiki-article">
+                <h3>1. Filosofie Architektury: Proč M-Modely Místo Gigantů?</h3>
+                <p>
+                    Současný trend ve vývoji velkých jazykových modelů (LLM) se soustředí na neustálé zvyšování počtu parametrů (7B, 70B, 405B). Tento přístup s sebou však nese obrovské ekonomické a hardwarové nároky. Obří modely se snaží zapamatovat si veškeré vědomosti světa přímo do svých vah (weights). Pro specifické firemní nasazení, lokální asistenty a práci s vlastními dokumenty je však tento koncept neefektivní.
+                </p>
+                <p>
+                    Architektura <strong>OpenBlink</strong> přichází s paradigmatickou změnou: <strong>Oddělení Jazykové Logiky od Vědomostní Báze</strong>. Váhy modelů rodiny Blink (12M až 192M) neslouží jako encyklopedie, ale výhradně jako <strong>vysoce efektivní český procesor textu</strong>. Vědomosti jsou modelu dodávány dynamicky v reálném čase pomocí technologie Retrieval-Augmented Generation (RAG).
+                </p>
+
+                <h3>2. Dvoufázový Tréninkový Proces (Pre-training & Instruct Fine-Tuning)</h3>
+                <p>
+                    Aby model s pouhými 192 miliony parametrů dosahoval špičkového gramatického citu a chápání instrukcí, byl trénink rozdělen do dvou přísně oddělených fází:
+                </p>
+
+                <h4>Fáze 1: Pre-training (Gramatický a Lingvistický Základ)</h4>
+                <p>
+                    V první fázi se model učil porozumět struktuře českého jazyka, gramatice, ohýbání slov a syntaxi. Dataset pro tuto fázi tvořil pečlivě vyčištěný korpus české krásné i odborné literatury (přes 3 000 vyčištěných e-knih), kompletní vyčištěná česká Wikipedie a vybrané odborné články.
+                </p>
+                <ul>
+                    <li><strong>Objem dat:</strong> 2.8 GB čistého textu (cca 750 milionů čistých českých tokenů).</li>
+                    <li><strong>Cíl:</strong> Causal Language Modeling (CLM) – předpovídání následujícího tokenu bez jakýchkoliv chatovacích struktur.</li>
+                    <li><strong>Výsledek:</strong> Model získal přirozený "cit" pro češtinu bez anglických kalků.</li>
+                </ul>
+
+                <h4>Fáze 2: Instruct & Agentic Fine-Tuning (Syntetický Distilovaný Dataset)</h4>
+                <p>
+                    Druhá fáze transformovala plynulý textový generátor v inteligentního chatbota a analytika. Místo ručního psaní desítek tisíc konverzací byl využit postup <strong>Knowledge Distillation</strong> (destilace znalostí) z obřích modelů (GPT-4o a Claude 3.5 Sonnet).
+                </p>
+                <p>
+                    Bylo vygenerováno 45 000 vysoce strukturovaných konverzačních párů obalených speciálními tokeny <code>&lt;|im_start|&gt;</code> a <code>&lt;|im_end|&gt;</code>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Formát Tréninkového Promptu pro Fázi 2 (Instruct)</span>
+                        <span>OpenBlink ChatML Format</span>
+                    </div>
+&lt;|im_start|&gt;system
+Jsi OpenBlink-Velocity, nativní český RAG agent. Tovým úkolem je extrahovat fakta, zkontrolovat zdroje a formulovat lidskou odpověď.&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+Kontext RAG:
+[Zdroj A]: Reklamaci je nutné podat do 14 dnů od převzetí.
+[Zdroj B]: V případě poškození při přepravě prosím přiložte fotografie.
+
+Dotaz: Jak mám postupovat při reklamaci poškozeného zboží?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant
+&lt;extract&gt;
+- Lhůta: 14 dnů od převzetí (Zdroj A)
+- Požadavek: Fotografie poškození (Zdroj B)
+&lt;/extract&gt;
+&lt;reconcile&gt;
+Zdroje se doplňují. Bez rozporů.
+&lt;/reconcile&gt;
+Ahoj! To mě mrzí, že balíček dorazil poškozený. Ráda ti pomohu s postupem reklamace...&lt;|im_end|&gt;
                 </div>
-            </a>
-        </div>
-    </section>
 
-    <section class="detailed-info" id="vyzkum">
-        <h2>Bezpečnost a faktická kontrola na prvním místě</h2>
-        <p>V OpenBlink AI věříme, že inteligence musí jít ruku v ruce se spolehlivostí. Naše modely jsou vybaveny architekturou <strong>Identity Guard</strong> pro okamžitou ochranu identity systému a pokročilou křížovou kontrolou slov, která eliminuje halucinace a vymýšlení faktů.</p>
-        
-        <h2>Navrženo pro vývojáře i koncové uživatele</h2>
-        <p>Ať už integrujete naše řešení do interních podnikových systémů přes REST API, nebo chatujete přímo přes webové rozhraní Vercel, MicroBlink a jeho pokročilé varianty vám poskytnou odpovědi postavené výhradně na reálných internetových podkladech.</p>
-    </section>
+                <h3 id="rag-engine">3. Nativní RAG-Agentic Pipeline (Čtyřkroková Analýza)</h3>
+                <p>
+                    Tradiční modely selhávají při RAGu z jednoho důvodu: dostanou surová data a snaží se z nich okamžitě vygenerovat odpověď. Pokud je v podkladech šum nebo rozpor, model si začne vymýšlet (halucinační efekt).
+                </p>
+                <p>
+                    <strong>OpenBlink Velocity</strong> provádí při každém dotazu interní čtyřkrokový proces v rámci generování skrytých uvažovacích tokenů:
+                </p>
+
+                <div class="arch-diagram">
+                    <div class="arch-step">
+                        <div class="arch-title">Krok 1: Extrakce Fakta (&lt;extract&gt;)</div>
+                        <div class="arch-desc">Model projde všechny vložené RAG dokumenty a vytáhne z nich čistá fakta ve formě strukturovaných odrážek. Ignoruje omáčku a balast.</div>
+                    </div>
+                    <div class="arch-step">
+                        <div class="arch-title">Krok 2: Křížová Kontrola & Rekonciliace (&lt;reconcile&gt;)</div>
+                        <div class="arch-desc">Model porovná fakta ze Zdroje A, Zdroje B atd. Pokud Zdroj A tvrdí X a Zdroj B tvrdí Y, model tento rozpor aktivně zachytí a zaznamená.</div>
+                    </div>
+                    <div class="arch-step">
+                        <div class="arch-title">Krok 3: Syntéza Logiky (&lt;synthesize&gt;)</div>
+                        <div class="arch-desc">Spojení ověřených faktů do jednoho logického celku bez duplicit a protimluvů.</div>
+                    </div>
+                    <div class="arch-step" style="margin-bottom: 0;">
+                        <div class="arch-title">Krok 4: Přirozená Lidská Formulace (Chatbot Feel)</div>
+                        <div class="arch-desc">Finální výstup pro uživatele. Aplikace přirozené české stylistiky, empatie, strukturování do odrážek a formátování.</div>
+                    </div>
+                </div>
+
+                <h3>4. Český Chatbot Feel & Stylistika</h3>
+                <p>
+                    Většina stávajících open-source modelů trpí tzv. "anglickým syndromem" – věty jsou doslovným překladem z angličtiny, zní nepřirozeně, studeně nebo šroubovaně.
+                </p>
+                <p>
+                    Tréninkový dataset pro OpenBlink byl optimalizován na <strong>vřelý, nápomocný a profesionální tón</strong>. Model aktivně používá oslovení, přirozenou návaznost větných členů, správné česká přechodníky a vyhýbá se typickým anglickým obratům ("Jsem velký jazykový model vyškolený společností...").
+                </p>
+
+                <h3 id="benchmarks">5. Srovnání Výkonu a Benchmarky</h3>
+                <p>
+                    Testování probíhalo na sadě 1 000 reálných českých RAG dotazů (firemní směrnice, právní dokumenty, e-commerce podpory).
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Velikost vah</th>
+                                <th>RAM Nároky</th>
+                                <th>RAG Přesnost (%)</th>
+                                <th>Rychlost (CPU token/s)</th>
+                                <th>Český Chatbot Feel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Llama-3-8B-Instruct</td>
+                                <td>8 000 M</td>
+                                <td>~ 6.5 GB</td>
+                                <td>88.4 %</td>
+                                <td>14 tok/s</td>
+                                <td>Průměrný (Překladový)</td>
+                            </tr>
+                            <tr>
+                                <td>Gemma-2-2B-IT</td>
+                                <td>2 600 M</td>
+                                <td>~ 2.2 GB</td>
+                                <td>82.1 %</td>
+                                <td>28 tok/s</td>
+                                <td>Dobrý</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">Blink Spark</td>
+                                <td>12 M</td>
+                                <td>&lt; 0.05 GB</td>
+                                <td>64.5 % (Jen intent)</td>
+                                <td>238 tok/s</td>
+                                <td>Základní</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">Blink Pulse</td>
+                                <td>48 M</td>
+                                <td>~ 0.18 GB</td>
+                                <td>84.2 %</td>
+                                <td>78 tok/s</td>
+                                <td>Velmi dobrý</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-cell">Blink Velocity</td>
+                                <td>192 M</td>
+                                <td>~ 0.52 GB</td>
+                                <td>91.8 %</td>
+                                <td>35 tok/s</td>
+                                <td>Špičkový (Nativní)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="datasets">6. Infrastruktura Sběru Data & Databáze zdarma</h3>
+                <p>
+                    Pro neustálé vylepšování modelů na základě reálných uživatelských dat využívá projekt OpenBlink architektonické řešení <strong>Zero-Cost Telemetry Pipeline</strong>:
+                </p>
+                <ol>
+                    <li><strong>Klientská Aplikace:</strong> Běží lokálně u uživatele (přes Tauri / Electron) a spouští model lokálně.</li>
+                    <li><strong>Anonymní Odeslání:</strong> Pokud uživatel povolí udělení souhlasu, konverzace je anonymizována a odeslána na bezplatný Vercel Serverless Endpoint.</li>
+                    <li><strong>Ukládání do Cloudflare R2:</strong> JSON soubory konverzací se ukládají do Cloudflare R2 (10 GB zdarma navždy, nulové poplatky za egress).</li>
+                    <li><strong>Přetečení do Backblaze B2:</strong> Dalších 10 GB zdarma pro zálohy. Celkem 20 GB úložného prostoru = cca 3 miliony konverzací zdarma.</li>
+                </ol>
+            </article>
+        </section>
+
+        <section style="margin-bottom: 80px;">
+            <div class="section-header">
+                <h2>Rychlá Integrace v Pythonu</h2>
+                <p>Spusťte jakýkoliv z modelů Blink během 10 sekund ve svém projektu.</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Python API / OpenBlink Engine</span>
+                    <span>pip install openblink-sdk</span>
+                </div>
+<span style="color: #6b7280;"># 1. Import knihovny OpenBlink</span>
+<span style="color: #818cf8;">from</span> openblink <span style="color: #818cf8;">import</span> BlinkEngine
+
+<span style="color: #6b7280;"># 2. Načtení modelu (přímý běh na CPU bez GPU!)</span>
+model = BlinkEngine.load(<span style="color: #facc15;">"openblink/blink-velocity-192m"</span>)
+
+<span style="color: #6b7280;"># 3. Spuštění RAG Agentic dotazu</span>
+response = model.generate_rag(
+    prompt=<span style="color: #facc15;">"Jaká je lhůta pro vrácení zboží?"</span>,
+    context=[
+        <span style="color: #facc15;">"Zdroj A: Zákonná lhůta pro vrácení bez udání důvodu je 14 dnů."</span>,
+        <span style="color: #facc15;">"Zdroj B: Naše firma nabízí členům klubu prodlouženou lhůtu 30 dnů."</span>
+    ]
+)
+
+<span style="color: #6b7280;"># 4. Výpis odpovědi</span>
+print(response.text)
+            </div>
+        </section>
+
+    </main>
 
     <footer>
-        <div>&copy; 2026 OpenBlink AI. Všechna práva reserved.</div>
-        <div class="footer-links">
-            <a href="#">Ochrana dat</a>
-            <a href="#">Podmínky užití</a>
-            <a href="#">API dokumentace</a>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>⚡ OpenBlink AI</h4>
+                <p style="font-size: 0.85rem; font-weight: 300;">
+                    Pionýři v oblasti českých micro-modelů a nativních RAG agentických architektur.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Modely</h4>
+                <ul>
+                    <li><a href="https://openblink.vercel.app/spark/">Blink Spark (12M)</a></li>
+                    <li><a href="https://openblink.vercel.app/pulse/">Blink Pulse (48M)</a></li>
+                    <li><a href="https://openblink.vercel.app/velocity">Blink Velocity (192M)</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dokumentace</h4>
+                <ul>
+                    <li><a href="#architecture">Architektura</a></li>
+                    <li><a href="#rag-engine">Nativní RAG Agent</a></li>
+                    <li><a href="#benchmarks">Benchmarky</a></li>
+                    <li><a href="#datasets">Dataset Pipeline</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Ekosystém</h4>
+                <ul>
+                    <li><a href="https://huggingface.co">HuggingFace Models</a></li>
+                    <li><a href="https://github.com">GitHub Repository</a></li>
+                    <li><a href="https://openblink.vercel.app/velocity">Vercel Web Portal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 OpenBlink AI Research. Všechna práva vyhrazena. Vydáno pod open-source licencí Apache 2.0.</p>
         </div>
     </footer>
 
